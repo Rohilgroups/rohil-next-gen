@@ -1,0 +1,5573 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tech Blog - Rohil NextGen</title>
+  <link rel="icon" type="images/rohil_nextgen" href="./images/rohil_nextgen-removebg-preview.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <!-- Add EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <style>
+    :root {
+      --primary-red: #d40404;
+      --dark-red: #a80303;
+      --light-red: #ffeded;
+      --white: #ffffff;
+      --light-gray: #f5f5f5;
+      --dark-gray: #333333;
+      --medium-gray: #666666;
+      --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Georgia;
+      line-height: 1.6;
+      color: var(--dark-gray);
+      background-color: var(--white);
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Top Bar Styles */
+    .top-bar {
+      background-color: var(--primary-red);
+      color: var(--white);
+      padding: 15px 0;
+      font-size: 15px;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+    }
+
+    .top-bar-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .contact-info {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .contact-info div {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 18px;
+    }
+
+    .social-icons a {
+      color: var(--white);
+      font-size: 20px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .social-icons a:hover {
+      background: var(--white);
+      color: var(--primary-red);
+      transform: translateY(-2px);
+    }
+
+    /*Navigation*/
+    .navbar {
+      background-color: var(--white);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 80px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 100px;
+      width: 120px;
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--text-black);
+      font-weight: 500;
+      font-size: 16px;
+      transition: color 0.3s;
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-red);
+    }
+
+    /* Active state styles */
+    .nav-link.active {
+      color: var(--primary-red);
+      font-weight: 600;
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--primary-red);
+      border-radius: 2px;
+    }
+
+    .dropdown {
+      position: absolute;
+      background-color: var(--white);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      min-width: 200px;
+      top: 100%;
+      left: 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s;
+      z-index: 100;
+    }
+
+    .nav-item:hover .dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-item {
+      display: block;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: var(--text-grey);
+      border-bottom: 1px solid #eee;
+      transition: all 0.3s;
+    }
+
+    .dropdown-item:hover {
+      background-color: var(--light-grey);
+      color: var(--primary-red);
+      padding-left: 25px;
+    }
+
+    /* Active state for dropdown items */
+    .dropdown-item.active {
+      background-color: var(--light-grey);
+      color: var(--primary-red);
+      font-weight: 500;
+      border-left: 3px solid var(--primary-red);
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      font-size: 24px;
+      background: none;
+      border: none;
+      color: var(--text-black);
+      z-index: 1001;
+    }
+
+    /* Mobile Overlay */
+    .mobile-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 998;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+
+    .mobile-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background-image: linear-gradient(rgba(102, 100, 100, 0.7),
+          rgba(29, 29, 29, 0.7)),
+        url("./images/tech-blog.webp");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: var(--white);
+      padding: 100px 0;
+      text-align: center;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background-color: var(--primary-red);
+      color: white;
+      padding: 12px 25px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: var(--transition);
+      margin-top: 20px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      background-color: var(--dark-red);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Blog Section */
+    .blog-section {
+      padding: 60px 0;
+      background-color: var(--white);
+    }
+
+    .section-title {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .section-title h2 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: var(--dark-gray);
+    }
+
+    .section-title p {
+      font-size: 1.1rem;
+      color: var(--medium-gray);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .blog-container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 40px;
+    }
+
+    .blog-posts {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .blog-post {
+      background-color: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .blog-post:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .blog-image {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .blog-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .blog-post:hover .blog-image img {
+      transform: scale(1.05);
+    }
+
+    .blog-content {
+      padding: 20px;
+    }
+
+    .blog-meta {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      font-size: 0.85rem;
+      color: var(--medium-gray);
+      flex-wrap: wrap;
+    }
+
+    .blog-meta span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .blog-meta i {
+      color: var(--primary-red);
+    }
+
+    .blog-content h3 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      color: var(--dark-gray);
+      line-height: 1.4;
+    }
+
+    .blog-content p {
+      margin-bottom: 20px;
+      color: var(--medium-gray);
+      line-height: 1.6;
+    }
+
+    .read-more {
+      display: inline-block;
+      color: var(--primary-red);
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: inherit;
+      font-size: inherit;
+    }
+
+    .read-more:hover {
+      color: var(--dark-red);
+      transform: translateX(5px);
+    }
+
+    /* NEW: WhatsApp Contact Button Styles */
+    .whatsapp-contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--primary-red);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: var(--transition);
+      margin-left: 15px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .whatsapp-contact-btn:hover {
+      background-color: var(--medium-gray);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+    }
+
+    .whatsapp-contact-btn i {
+      font-size: 1.1rem;
+    }
+
+    .blog-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    /* Interview Questions Specific Styles - IMPROVED */
+    .interview-questions {
+      background: var(--light-gray);
+      border-radius: 10px;
+      padding: 25px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+
+    .interview-questions h4 {
+      color: var(--primary-red);
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+      border-bottom: 2px solid var(--primary-red);
+      padding-bottom: 10px;
+    }
+
+    .question-item {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 15px;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--primary-red);
+      overflow: hidden;
+    }
+
+    .question {
+      font-weight: 600;
+      color: var(--dark-gray);
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+      line-height: 1.4;
+    }
+
+    .answer {
+      color: var(--medium-gray);
+      line-height: 1.6;
+      overflow: hidden;
+    }
+
+    .answer ul {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+
+    .answer li {
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+
+    .category-tag {
+      display: inline-block;
+      background: var(--primary-red);
+      color: var(--white);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+    }
+
+    /* Related Content Styles - IMPROVED */
+    .related-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+      margin-top: 0;
+      background-color: var(--light-gray);
+      border-radius: 8px;
+      padding: 0 20px;
+    }
+
+    .related-content.active {
+      max-height: 1000px;
+      margin-top: 20px;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    /* NEW: Thoughts Box for Each Blog Post */
+    .post-thoughts-box {
+      margin-top: 25px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      border-left: 4px solid var(--primary-red);
+    }
+
+    .post-thoughts-title {
+      font-size: 1.1rem;
+      color: var(--dark-gray);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .post-thoughts-title i {
+      color: var(--primary-red);
+    }
+
+    .post-thoughts-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-family: Georgia;
+      font-size: 1rem;
+      resize: vertical;
+      transition: var(--transition);
+      margin-bottom: 15px;
+    }
+
+    .post-thoughts-textarea:focus {
+      outline: none;
+      border-color: var(--primary-red);
+    }
+
+    .post-thoughts-textarea::placeholder {
+      color: #aaa;
+      font-style: italic;
+    }
+
+    .post-thoughts-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .post-thoughts-note {
+      font-size: 0.85rem;
+      color: var(--medium-gray);
+      flex: 1;
+    }
+
+    .post-whatsapp-btn {
+      background-color: var(--primary-red);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-family: Georgia;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
+
+    .post-whatsapp-btn:hover {
+      background-color: var(--dark-red);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(212, 4, 4, 0.3);
+    }
+
+    .post-whatsapp-btn i {
+      font-size: 1.1rem;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .sidebar-widget {
+      background-color: var(--white);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .widget-title {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: var(--dark-gray);
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .widget-title::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background-color: var(--primary-red);
+    }
+
+    .recent-posts {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .recent-post {
+      display: flex;
+      gap: 15px;
+      align-items: flex-start;
+    }
+
+    .recent-post-image {
+      width: 70px;
+      height: 70px;
+      border-radius: 5px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .recent-post-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .recent-post-content h4 {
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      line-height: 1.4;
+    }
+
+    .recent-post-content span {
+      font-size: 0.8rem;
+      color: var(--medium-gray);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      background-color: var(--light-gray);
+      color: var(--medium-gray);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .tag:hover {
+      background-color: var(--primary-red);
+      color: var(--white);
+    }
+
+    /* WhatsApp Newsletter Styles */
+    .whatsapp-newsletter {
+      background-color: var(--white);
+      color: var(--dark-gray);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .whatsapp-newsletter .widget-title {
+      color: var(--dark-gray);
+    }
+
+    .whatsapp-newsletter .widget-title::after {
+      background-color: var(--primary-red);
+    }
+
+    .whatsapp-newsletter p {
+      margin-bottom: 15px;
+      color: var(--dark-gray);
+      line-height: 1.5;
+    }
+
+    .whatsapp-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .whatsapp-form input,
+    .whatsapp-form select {
+      padding: 10px 12px;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      border-radius: 5px;
+      font-family: Georgia;
+      transition: var(--transition);
+      background-color: var(--white);
+      font-size: 14px;
+    }
+
+    .whatsapp-form input:focus,
+    .whatsapp-form select:focus {
+      outline: none;
+      border-color: var(--dark-gray);
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+      background-color: var(--white);
+    }
+
+    .whatsapp-btn i {
+      font-size: 1.1rem;
+    }
+
+    .whatsapp-btn {
+      background-color: var(--white);
+      color: var(--primary-red);
+      border: 2px solid var(--primary-red);
+      padding: 10px 15px;
+      border-radius: 5px;
+      font-family: Georgia;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .whatsapp-btn:hover {
+      background-color: var(--dark-gray);
+      color: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .whatsapp-btn:disabled {
+      background-color: var(--light-gray);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Success/Error Messages */
+    .message {
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    /* Loading Animation */
+    .loading {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      border: 3px solid rgba(37, 211, 102, 0.3);
+      border-radius: 50%;
+      border-top-color: #25d366;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Newsletter Subscription Styles */
+    .newsletter-section {
+      background: linear-gradient(135deg,
+          var(--primary-red),
+          var(--dark-red));
+      padding: 40px 0;
+      margin-top: 40px;
+      color: white;
+    }
+
+    .newsletter-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .newsletter-content {
+      flex: 1;
+      min-width: 300px;
+      margin-right: 30px;
+    }
+
+    .newsletter-content h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .newsletter-content p {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 0;
+      color: white;
+      line-height: 1.5;
+    }
+
+    .newsletter-form {
+      flex: 1;
+      min-width: 300px;
+      display: flex;
+      gap: 10px;
+      position: relative;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 5px;
+      font-family: Georgia;
+      font-size: 14px;
+      outline: none;
+      min-width: 0;
+    }
+
+    .newsletter-btn {
+      background: white;
+      color: var(--primary-red);
+      border: none;
+      border-radius: 5px;
+      padding: 12px 20px;
+      font-family: Georgia;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .newsletter-btn:hover:not(:disabled) {
+      background: #f0f0f0;
+      transform: translateY(-2px);
+    }
+
+    .newsletter-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .newsletter-message {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+      width: 100%;
+    }
+
+    .newsletter-success {
+      background-color: rgba(46, 204, 113, 0.2);
+      color: white;
+      border: 1px solid #2ecc71;
+    }
+
+    .newsletter-error {
+      background-color: rgba(231, 76, 60, 0.2);
+      color: #ffcccb;
+      border: 1px solid #e74c3c;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background-color: var(--white);
+      padding: 25px;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .modal h3 {
+      color: var(--primary-red);
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .modal p {
+      margin-bottom: 20px;
+      color: var(--medium-gray);
+      line-height: 1.5;
+    }
+
+    .modal button {
+      background-color: var(--primary-red);
+      color: var(--white);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: Georgia;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .modal button:hover {
+      background-color: var(--dark-red);
+    }
+
+    /* Chat Widget Styles - UPDATED */
+    .chat-widget {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1000;
+      font-family: Georgia;
+    }
+
+    .chat-toggle {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg,
+          var(--primary-red),
+          var(--primary-red));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      color: white;
+      font-size: 24px;
+    }
+
+    .chat-toggle:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .chat-container {
+      width: 350px;
+      height: 500px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg,
+          var(--primary-red),
+          var(--dark-red));
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-header-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chatbot-image {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .chatbot-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 5px;
+    }
+
+    .chat-header h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .chat-status {
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .status-indicator {
+      width: 8px;
+      height: 8px;
+      background-color: #2ecc71;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+
+    .chat-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 5px;
+      border-radius: 50%;
+      transition: background-color 0.2s;
+    }
+
+    .chat-close:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .chat-message {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    .chat-message.user {
+      justify-content: flex-end;
+    }
+
+    .chat-message.bot {
+      justify-content: flex-start;
+    }
+
+    .message-content {
+      max-width: 80%;
+      padding: 10px 15px;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.4;
+      word-wrap: break-word;
+    }
+
+    .user .message-content {
+      background: linear-gradient(135deg,
+          var(--primary-red),
+          var(--dark-red));
+      color: white;
+      border-bottom-right-radius: 5px;
+    }
+
+    .bot .message-content {
+      background: white;
+      color: #333;
+      border: 1px solid #e0e0e0;
+      border-bottom-left-radius: 5px;
+    }
+
+    .chat-input-container {
+      padding: 15px;
+      border-top: 1px solid #e0e0e0;
+      display: flex;
+      background: white;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 12px 15px;
+      border: 1px solid #e0e0e0;
+      border-radius: 25px;
+      outline: none;
+      font-family: Georgia;
+      font-size: 14px;
+    }
+
+    .chat-input:focus {
+      border-color: var(--primary-red);
+    }
+
+    .send-button {
+      background: linear-gradient(135deg,
+          var(--primary-red),
+          var(--dark-red));
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin-left: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .send-button:hover {
+      transform: scale(1.05);
+    }
+
+    .typing-indicator {
+      display: none;
+      padding: 10px 15px;
+      font-style: italic;
+      color: #777;
+      font-size: 12px;
+    }
+
+    .typing-dots {
+      display: inline-block;
+    }
+
+    .typing-dots span {
+      animation: typing 1.4s infinite;
+      opacity: 0.6;
+    }
+
+    .typing-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes typing {
+
+      0%,
+      60%,
+      100% {
+        opacity: 0.6;
+      }
+
+      30% {
+        opacity: 1;
+      }
+    }
+
+    /* Course List Styles */
+    .course-list {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .course-item {
+      background: white;
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: all 0.3s;
+      border-left: 3px solid var(--primary-red);
+    }
+
+    .course-item:hover {
+      transform: translateX(5px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .course-title {
+      font-weight: 600;
+      color: var(--dark-red);
+      margin-bottom: 5px;
+    }
+
+    .course-duration {
+      font-size: 12px;
+      color: #777;
+    }
+
+    .course-details {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 5px;
+      font-size: 13px;
+    }
+
+    .course-details.active {
+      display: block;
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .quick-action-btn {
+      background: var(--primary-red);
+      color: white;
+      border: none;
+      border-radius: 15px;
+      padding: 5px 10px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .quick-action-btn:hover {
+      background: var(--dark-red);
+    }
+
+    .blog-image {
+      height: 240px;
+      width: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 8px;
+      display: block;
+    }
+
+    /* Enhanced Footer */
+    .tech-footer {
+      background: linear-gradient(rgba(97, 97, 97, 0.95),
+          rgba(128, 112, 112, 0.98));
+      color: var(--white);
+      padding: 50px 0 20px;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .footer-column h3 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: var(--white);
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .footer-column h3::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background-color: var(--primary-red);
+    }
+
+    .footer-column p {
+      margin-bottom: 20px;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.6;
+      font-size: 16px;
+
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      color: var(--white);
+      transition: var(--transition);
+      text-decoration: none;
+      font-size: 1.5rem;
+    }
+
+    .social-links a:hover {
+      background-color: var(--primary-red);
+      transform: translateY(-3px);
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary-red);
+      transform: translateX(5px);
+    }
+
+    .footer-links i {
+      font-size: 0.8rem;
+      color: var(--primary-red);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      padding-top: 20px;
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 20px;
+      padding-right: 20px;
+      gap: 15px;
+    }
+
+    .footer-bottom p {
+      color: rgba(255, 255, 255, 0.8);
+      margin: 0;
+      font-size: 14px;
+    }
+
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background-color: var(--primary-red);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      z-index: 999;
+      border: none;
+      font-size: 18px;
+    }
+
+    .back-to-top.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background-color: var(--dark-red);
+    }
+
+    /* Pagination Styles */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 40px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pagination button {
+      background-color: var(--white);
+      color: var(--dark-gray);
+      border: 1px solid #ddd;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: Georgia;
+      font-weight: 500;
+    }
+
+    .pagination button:hover:not(:disabled) {
+      background-color: var(--primary-red);
+      color: var(--white);
+      border-color: var(--primary-red);
+    }
+
+    .pagination button.active {
+      background-color: var(--primary-red);
+      color: var(--white);
+      border-color: var(--primary-red);
+    }
+
+    .pagination button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .pagination-info {
+      margin: 0 15px;
+      color: var(--medium-gray);
+      font-size: 0.9rem;
+    }
+
+    /* ========== RESPONSIVE STYLES ========== */
+
+    /* Large devices (desktops, 992px and up) */
+    @media (max-width: 992px) {
+      .blog-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .sidebar {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+      }
+
+      .hero-title {
+        font-size: 2.2rem;
+      }
+
+      .nav-menu {
+        gap: 20px;
+      }
+    }
+
+    /* Medium devices (tablets, 768px and up) */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+      }
+
+      .nav-menu {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        flex-direction: column;
+        background-color: var(--white);
+        width: 280px;
+        height: 100vh;
+        transition: 0.4s ease;
+        box-shadow: 2px 0 15px rgba(0, 0, 0, 0.1);
+        padding: 80px 20px 20px;
+        gap: 0;
+        overflow-y: auto;
+        z-index: 999;
+      }
+
+      .nav-menu.active {
+        left: 0;
+      }
+
+      .nav-item {
+        margin: 0;
+        width: 100%;
+      }
+
+      .nav-link {
+        padding: 15px 0;
+        width: 100%;
+        justify-content: space-between;
+        border-bottom: 1px solid #eee;
+        font-size: 16px;
+      }
+
+      .dropdown {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        box-shadow: none;
+        display: none;
+        background-color: var(--light-gray);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        width: 100%;
+        margin-top: 10px;
+        border-radius: 5px;
+      }
+
+      .dropdown.active {
+        display: block;
+        max-height: 300px;
+      }
+
+      .dropdown-item {
+        padding: 12px 15px;
+        border-bottom: 1px solid #ddd;
+        font-size: 14px;
+      }
+
+      .nav-link i.fa-chevron-down {
+        transition: transform 0.3s ease;
+      }
+
+      .nav-link.active i.fa-chevron-down {
+        transform: rotate(180deg);
+      }
+
+      .top-bar-container {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+
+      .top-bar {
+        min-height: auto;
+        padding: 20px 0;
+      }
+
+      .contact-info {
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .social-icons {
+        justify-content: center;
+      }
+
+      .hero-section {
+        padding: 80px 0;
+        min-height: 350px;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.1rem;
+      }
+
+      .section-title h2 {
+        font-size: 1.8rem;
+      }
+
+      .newsletter-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+      }
+
+      .newsletter-content {
+        margin-right: 0;
+      }
+
+      .newsletter-form {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .sidebar {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+      }
+
+      .chat-container {
+        width: 320px;
+        height: 450px;
+      }
+
+      /* IMPROVED: Interview Questions Responsive Styles */
+      .interview-questions {
+        padding: 15px;
+        max-height: 500px;
+        overflow-y: auto;
+      }
+
+      .question-item {
+        padding: 15px;
+      }
+
+      .question {
+        font-size: 1rem;
+        line-height: 1.4;
+      }
+
+      .answer {
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .answer ul {
+        padding-left: 15px;
+      }
+
+      .answer li {
+        margin-bottom: 6px;
+      }
+
+      /* NEW: Thoughts Box Responsive */
+      .post-thoughts-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .post-thoughts-note {
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      .post-whatsapp-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* Small devices (landscape phones, 576px and up) */
+    @media (max-width: 576px) {
+      .container {
+        padding: 0 15px;
+      }
+
+      .hero-title {
+        font-size: 1.8rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+
+      .section-title h2 {
+        font-size: 1.6rem;
+      }
+
+      .blog-content {
+        padding: 15px;
+      }
+
+      .blog-content h3 {
+        font-size: 1.2rem;
+      }
+
+      .blog-meta {
+        font-size: 0.8rem;
+        gap: 10px;
+      }
+
+      .sidebar-widget {
+        padding: 15px;
+      }
+
+      .widget-title {
+        font-size: 1.1rem;
+      }
+
+      .recent-post {
+        gap: 12px;
+      }
+
+      .recent-post-image {
+        width: 60px;
+        height: 60px;
+      }
+
+      .tags {
+        gap: 6px;
+      }
+
+      .tag {
+        padding: 4px 10px;
+        font-size: 0.8rem;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+
+      .chat-container {
+        width: 300px;
+        height: 420px;
+        left: 10px;
+        right: 10px;
+        margin: 0 auto;
+      }
+
+      .chat-toggle {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+      }
+
+      .back-to-top {
+        width: 45px;
+        height: 45px;
+        bottom: 20px;
+        right: 20px;
+      }
+
+      /* IMPROVED: Interview Questions for Small Screens */
+      .interview-questions {
+        padding: 12px;
+        max-height: 400px;
+      }
+
+      .question-item {
+        padding: 12px;
+      }
+
+      .question {
+        font-size: 0.95rem;
+      }
+
+      .answer {
+        font-size: 0.85rem;
+      }
+    }
+
+    /* Extra small devices (phones, 480px and down) */
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 1.6rem;
+      }
+
+      .cta-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+
+      .blog-image {
+        height: 180px;
+      }
+
+      .blog-meta {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .whatsapp-form input,
+      .whatsapp-form select {
+        padding: 8px 10px;
+      }
+
+      .whatsapp-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+
+      .newsletter-input {
+        padding: 10px 12px;
+      }
+
+      .newsletter-btn {
+        padding: 10px 15px;
+        min-width: 100px;
+      }
+
+      .modal-content {
+        padding: 20px;
+      }
+
+      .chat-container {
+        width: 280px;
+        height: 400px;
+      }
+
+      .message-content {
+        max-width: 85%;
+        font-size: 13px;
+        padding: 8px 12px;
+      }
+
+      /* IMPROVED: Interview Questions for Extra Small Screens */
+      .interview-questions {
+        padding: 10px;
+        max-height: 350px;
+      }
+
+      .question-item {
+        padding: 10px;
+      }
+
+      .question {
+        font-size: 0.9rem;
+      }
+
+      .answer {
+        font-size: 0.8rem;
+      }
+
+      .answer ul {
+        padding-left: 12px;
+      }
+
+      /* NEW: Thoughts Box for Extra Small Screens */
+      .post-thoughts-box {
+        padding: 15px;
+      }
+
+      .post-thoughts-title {
+        font-size: 1rem;
+      }
+
+      .post-thoughts-textarea {
+        min-height: 80px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-container">
+      <div class="contact-info">
+        <div><i class="fas fa-map-marker-alt"></i>Viruthunagar</div>
+        <div><i class="fas fa-envelope"></i> admin@rohiltechnologies.com</div>
+        <div><i class="fas fa-phone"></i>+91 97518 67879</div>
+      </div>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/profile.php?id=61574571321905"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/rohil_nextgen/"><i class="fab fa-instagram"></i></a>
+        <a href="https://youtube.com/@rohiltechdigitalteam?si=ziFJIu4UCkfetVE1"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <!-- Placeholder for logo -->
+        <div class="logo" style="display: flex; align-items: center">
+          <img src="./images/rohil_nextgen-removebg-preview.png" alt="Logo" />
+        </div>
+      </div>
+
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="index.html" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="gallery.html" class="nav-link">Gallery</a>
+        </li>
+        <li class="nav-item dropdown-parent">
+          <a href="#" class="nav-link dropdown-toggle">Courses <i class="fas fa-chevron-down"></i></a>
+          <div class="dropdown">
+            <a href="classic.html" class="dropdown-item">Classic</a>
+            <a href="professional.html" class="dropdown-item">Professional</a>
+            <a href="expert.html" class="dropdown-item">Expert</a>
+            <a href="internship.html" class="dropdown-item">Internship</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="browsecourse.html" class="nav-link">Browse Courses</a>
+        </li>
+        <li class="nav-item dropdown-parent">
+          <a href="#" class="nav-link dropdown-toggle">Support <i class="fas fa-chevron-down"></i></a>
+          <div class="dropdown">
+            <a href="placement.html" class="dropdown-item">Placement Training</a>
+            <a href="companies.html" class="dropdown-item">Tied-up Companies</a>
+            <a href="placement-success.html" class="dropdown-item">Placement Success</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="techblog.html" class="nav-link active">Techblog</a>
+        </li>
+        <li class="nav-item">
+          <a href="scholarship.html" class="nav-link">Scholarship</a>
+        </li>
+        <li class="nav-item">
+          <a href="contact.html" class="nav-link">Contact</a>
+        </li>
+      </ul>
+
+      <div class="hamburger">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Tech Blog</h1>
+      <p class="hero-subtitle">
+        Stay updated with the latest technology trends, tutorials, and
+        industry insights
+      </p>
+      <a href="#featured" class="cta-button">Explore Articles</a>
+    </div>
+  </section>
+
+  <!-- Blog Section -->
+  <section class="blog-section" id="featured">
+    <div class="container">
+      <div class="section-title">
+        <h2>Latest Tech Articles</h2>
+        <p>Insights, tutorials, and updates from the world of technology</p>
+      </div>
+
+      <div class="blog-container">
+        <div class="blog-posts" id="blogPostsContainer">
+          <!-- Blog posts will be loaded here by JavaScript -->
+        </div>
+
+        <div class="sidebar">
+          <!-- Recent Posts Widget -->
+          <div class="sidebar-widget">
+            <h3 class="widget-title">Recent Posts</h3>
+            <div class="recent-posts">
+              <div class="recent-post">
+                <div class="recent-post-image">
+                  <img src="./images/lua.jpg" alt="Lua Programming" />
+                </div>
+                <div class="recent-post-content">
+                  <h4>Lua: Lightweight, Fast, and Powerful Scripting</h4>
+                  <span>January 27, 2026</span>
+                </div>
+              </div>
+              <div class="recent-post">
+                <div class="recent-post-image">
+                  <img src="./images/d.avif" alt="Data Analyst" />
+                </div>
+                <div class="recent-post-content">
+                  <h4>Data Analyst Skills Every Beginner Must Learn</h4>
+                  <span>January 13, 2026</span>
+                </div>
+              </div>
+
+              <div class="recent-post">
+                <div class="recent-post-image">
+                  <img src="./images/flutter.png" alt="Flutter Development" />
+                </div>
+                <div class="recent-post-content">
+                  <h4>Flutter: Build Beautiful Apps for Every Platform</h4>
+                  <span>January 6, 2026</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Tags Widget -->
+          <div class="sidebar-widget">
+            <h3 class="widget-title">Popular Tags</h3>
+            <div class="tags">
+              <a href="./flutter.html" class="tag">Flutter</a>
+              <a href="./graphic.html" class="tag">Graphic Designing</a>
+              <a href="./java-code.html" class="tag">Java</a>
+              <a href="./python-code.html" class="tag">Python</a>
+              <a href="./react.html" class="tag">React Js</a>
+              <a href="./frontend.html" class="tag">Frontend Development</a>
+              <a href="./digitalmarket.html" class="tag">Digital Marketing</a>
+              <a href="./ai-ml.html" class="tag">Artificial Intelligence</a>
+              <a href="./data-analyse.html" class="tag">Data Analysis</a>
+              <a href="./uxui.html" class="tag">UI/UX Design</a>
+            </div>
+          </div>
+
+          <!-- WhatsApp Newsletter Widget -->
+          <div class="whatsapp-newsletter">
+            <h3 class="widget-title">WhatsApp Updates</h3>
+            <p>
+              Get the latest tech updates and tutorials directly on WhatsApp
+            </p>
+            <form class="whatsapp-form" id="whatsappForm">
+              <input type="text" id="nameInput" placeholder="Your Name" required />
+              <input type="tel" id="phoneInput" placeholder="Your WhatsApp Number" required />
+              <select id="interestSelect">
+                <option value="">Select your interest</option>
+                <option value="web-development">Web Development</option>
+                <option value="data-science">Data Science</option>
+                <option value="ai-ml">AI & Machine Learning</option>
+                <option value="cybersecurity">Cybersecurity</option>
+                <option value="mobile-dev">Mobile Development</option>
+                <option value="cloud-computing">Cloud Computing</option>
+                <option value="all">All Updates</option>
+              </select>
+              <button type="submit" class="whatsapp-btn" id="whatsappSubscribeBtn">
+                <i class="fab fa-whatsapp"></i>
+                <span>Subscribe via WhatsApp</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination Controls -->
+      <div class="pagination" id="paginationContainer">
+        <!-- Pagination buttons will be generated by JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Chat Widget -->
+  <div class="chat-widget">
+    <div class="chat-container" id="chatContainer">
+      <div class="chat-header">
+        <div class="chat-header-content">
+          <div class="chatbot-image">
+            <img src="./images/rohil_nextgen-removebg-preview.png" alt="Chatbot" />
+          </div>
+          <div>
+            <h3>Course Information</h3>
+            <div class="chat-status">
+              <div class="status-indicator"></div>
+              <span>Online</span>
+            </div>
+          </div>
+        </div>
+        <button class="chat-close" id="chatClose">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-message bot">
+          <div class="message-content">
+            Welcome to Rohil NextGen! I'm here to help you explore our
+            courses. Type "courses" to see all available programs.
+          </div>
+        </div>
+        <div class="chat-message bot">
+          <div class="message-content">
+            You can also ask about specific courses like Java, Python, Web
+            Development, etc.
+          </div>
+        </div>
+
+        <!-- Course List (initially hidden) -->
+        <div class="course-list" id="courseList">
+          <div class="course-item" data-course="java">
+            <div class="course-title">Java Full Stack Development</div>
+            <div class="course-duration">Duration: 3 months</div>
+            <div class="course-details" id="java-details">
+              <p>
+                <strong>Core Java:</strong> OOPs, Collections, Multithreading
+              </p>
+              <p><strong>Advanced Java:</strong> JDBC, Servlets, JSP</p>
+              <p><strong>Frameworks:</strong> Spring, Hibernate</p>
+              <p><strong>Frontend:</strong> HTML, CSS, JavaScript, React</p>
+              <div class="quick-actions">
+                <button class="quick-action-btn" onclick="enrollCourse('Java')">
+                  Enroll Now
+                </button>
+                <button class="quick-action-btn" onclick="requestSyllabus('Java')">
+                  Get Syllabus
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="course-item" data-course="python">
+            <div class="course-title">Python with Data Science</div>
+            <div class="course-duration">Duration: 4 months</div>
+            <div class="course-details" id="python-details">
+              <p><strong>Python Fundamentals:</strong> Core Python, OOPs</p>
+              <p><strong>Data Analysis:</strong> Pandas, NumPy, Matplotlib</p>
+              <p>
+                <strong>Machine Learning:</strong> Scikit-learn, TensorFlow
+              </p>
+              <p><strong>Web Framework:</strong> Django/Flask</p>
+              <div class="quick-actions">
+                <button class="quick-action-btn" onclick="enrollCourse('Python')">
+                  Enroll Now
+                </button>
+                <button class="quick-action-btn" onclick="requestSyllabus('Python')">
+                  Get Syllabus
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="course-item" data-course="web">
+            <div class="course-title">Web Development</div>
+            <div class="course-duration">Duration: 3 months</div>
+            <div class="course-details" id="web-details">
+              <p><strong>Frontend:</strong> HTML5, CSS3, JavaScript, React</p>
+              <p><strong>Backend:</strong> Node.js, Express.js</p>
+              <p><strong>Database:</strong> MongoDB, MySQL</p>
+              <p><strong>Tools:</strong> Git, REST APIs, Deployment</p>
+              <div class="quick-actions">
+                <button class="quick-action-btn" onclick="enrollCourse('Web Development')">
+                  Enroll Now
+                </button>
+                <button class="quick-action-btn" onclick="requestSyllabus('Web Development')">
+                  Get Syllabus
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="course-item" data-course="mobile">
+            <div class="course-title">Mobile App Development</div>
+            <div class="course-duration">Duration: 3 months</div>
+            <div class="course-details" id="mobile-details">
+              <p><strong>Android:</strong> Java/Kotlin, Android Studio</p>
+              <p><strong>iOS:</strong> Swift, Xcode</p>
+              <p><strong>Cross-platform:</strong> React Native/Flutter</p>
+              <p><strong>Backend Integration:</strong> Firebase, APIs</p>
+              <div class="quick-actions">
+                <button class="quick-action-btn" onclick="enrollCourse('Mobile App Development')">
+                  Enroll Now
+                </button>
+                <button class="quick-action-btn" onclick="requestSyllabus('Mobile App Development')">
+                  Get Syllabus
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="course-item" data-course="data">
+            <div class="course-title">Data Science & Analytics</div>
+            <div class="course-duration">Duration: 4 months</div>
+            <div class="course-details" id="data-details">
+              <p>
+                <strong>Statistics:</strong> Probability, Hypothesis Testing
+              </p>
+              <p>
+                <strong>Python Libraries:</strong> Pandas, NumPy, Scikit-learn
+              </p>
+              <p>
+                <strong>Visualization:</strong> Matplotlib, Seaborn, Tableau
+              </p>
+              <p>
+                <strong>ML Algorithms:</strong> Regression, Classification,
+                Clustering
+              </p>
+              <div class="quick-actions">
+                <button class="quick-action-btn" onclick="enrollCourse('Data Science')">
+                  Enroll Now
+                </button>
+                <button class="quick-action-btn" onclick="requestSyllabus('Data Science')">
+                  Get Syllabus
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="course-item" data-course="cloud">
+            <div class="course-title">Cloud Computing</div>
+            <div class="course-duration">Duration: 3 months</div>
+            <div class="course-details" id="cloud-details">
+              <p><strong>AWS:</strong> EC2, S3, Lambda, RDS</p>
+              <p><strong>Azure:</strong> Virtual Machines, App Services</p>
+              <p>
+                <strong>Google Cloud:</strong> Compute Engine, Cloud Storage
+              </p>
+              <p><strong>DevOps:</strong> Docker, Kubernetes, CI/CD</p>
+              <div class="quick-actions">
+                <button class="quick-action-btn" onclick="enrollCourse('Cloud Computing')">
+                  Enroll Now
+                </button>
+                <button class="quick-action-btn" onclick="requestSyllabus('Cloud Computing')">
+                  Get Syllabus
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">
+          <span class="typing-dots">
+            Rohil NextGen is typing<span>.</span><span>.</span><span>.</span>
+          </span>
+        </div>
+      </div>
+      <div class="chat-input-container">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Ask about courses..." />
+        <button class="send-button" id="sendButton">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+    <div class="chat-toggle" id="chatToggle">
+      <i class="fas fa-comments"></i>
+    </div>
+  </div>
+
+  <!-- Newsletter Subscription Section -->
+  <section class="newsletter-section">
+    <div class="newsletter-container">
+      <div class="newsletter-content">
+        <h3>Stay Updated with Rohil NextGen</h3>
+        <p>
+          Subscribe to our newsletter for the latest course updates, tech
+          insights, and placement opportunities.
+        </p>
+      </div>
+      <form class="newsletter-form" id="newsletterForm">
+        <input type="email" class="newsletter-input" id="newsletterEmail" placeholder="Enter your email address"
+          required />
+        <button type="submit" class="newsletter-btn" id="newsletterBtn">
+          <span id="btnText">Subscribe</span>
+          <i class="fas fa-paper-plane"></i>
+        </button>
+        <div id="newsletterMessage" class="newsletter-message"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="tech-footer">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>About Rohil NextGen Software Training Institute</h3>
+        <p>
+          We are a premier technology education platform in Virudhunagar offering cutting-edge courses in software
+          development, data science, cybersecurity, and IT training with placement support. Get the best software
+          training in Virudhunagar with industry experts.
+        </p>
+        <div class="social-links">
+          <a href="https://www.facebook.com/p/Rohilacademy-61574571321905/" aria-label="Facebook"><i
+              class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/rohil_nextgen/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.youtube.com/@rohiltechdigitalteam" aria-label="YouTube"><i
+              class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+          <li><a href="classic.html"><i class="fas fa-chevron-right"></i> IT Courses</a></li>
+          <li><a href="browsecourse.html"><i class="fas fa-chevron-right"></i> Browse Courses</a></li>
+          <li><a href="companies.html"><i class="fas fa-chevron-right"></i> Tied-up Companies</a></li>
+          <li><a href="placement-success.html"><i class="fas fa-chevron-right"></i> Placements</a></li>
+          <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h3>Contact Rohil NextGen</h3>
+        <ul class="footer-links">
+          <li><a href="#"><i class="fas fa-map-marker-alt"></i>Rohil NextGen, Virudhunagar, Tamil Nadu</a></li>
+          <li><a href="tel:+919751867879"><i class="fas fa-phone"></i>+91 97518 67879</a></li>
+          <li><a href="mailto:admin@rohiltechnologies.com"><i class="fas fa-envelope"></i>
+              admin@rohiltechnologies.com</a></li>
+          <li><a href="#"><i class="fas fa-clock"></i>Mon - Sat: 9:00 AM - 7:00 PM</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="copyright">
+        <p>&copy; 2025 Rohil NextGen - Software Training Institute in Virudhunagar. All Rights Reserved.</p>
+      </div>
+      <div class="footer-bottom-links">
+        <p>Designed By Rohil Technologies</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <div class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal" id="confirmationModal">
+    <div class="modal-content">
+      <h3>Confirm Your Subscription</h3>
+      <p>
+        We've opened WhatsApp for you. Please send the pre-filled message to
+        complete your subscription.
+      </p>
+      <button id="closeModal">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Initialize EmailJS
+    (function () {
+      emailjs.init("zImWs-QBwGe-B-JT3"); // Replace with your actual EmailJS public key
+    })();
+
+    // Updated Blog Data with GenAI & ML Interview Questions
+    const blogPosts = [
+      {
+        id: 18,
+        title: "Why Certification Matters in Today's Competitive Job Market",
+        excerpt: "Turn your skills into recognized career value. Learn how professional certifications can help you stand out, get noticed by employers, and accelerate your career growth in today's competitive IT industry.",
+        image: "./images/Certification Matters.png",
+        date: "February 17, 2026",
+        category: "Certification",
+        author: "Rohil NextGen",
+        relatedContent: `
+    <div class="interview-questions">
+
+      <h4>Why Certification Matters in Today's Competitive Job Market</h4>
+      <p><strong>Rohil NextGen Date:</strong> 17.01.2026</p>
+
+      <div class="question-item">
+        <div class="question">Turn Skills into Recognized Career Value</div>
+        <div class="answer">
+          <p>
+            In today's fast-changing job market, having skills alone is not always enough. Employers look for proof of knowledge, practical ability, and commitment to continuous learning. This is where professional certifications play a crucial role. Certifications validate your skills and help you stand out in a highly competitive environment.
+          </p>
+          <p>
+            At Rohil NextGen, we believe certification is not just a document—it is a career advantage.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">The Growing Competition in the Job Market</div>
+        <div class="answer">
+          <p>
+            With more graduates entering the workforce every year, competition for quality jobs has increased significantly. Employers receive hundreds of applications for a single role and often shortlist candidates based on verified skills.
+          </p>
+          <p>Certifications help recruiters:</p>
+          <ul>
+            <li>Quickly identify skilled candidates</li>
+            <li>Trust your technical and professional knowledge</li>
+            <li>Reduce hiring risks</li>
+            <li>Select job-ready professionals</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">How Certification Adds Value to Your Career</div>
+        <div class="answer">
+          <p>
+            A certification proves that you have successfully completed structured training and met industry standards. It demonstrates your dedication, discipline, and readiness to work in real-world environments.
+          </p>
+          <p>Key benefits of certification include:</p>
+          <ul>
+            <li>Improved job opportunities</li>
+            <li>Higher salary potential</li>
+            <li>Better credibility with employers</li>
+            <li>Faster career growth</li>
+            <li>Increased confidence in your skills</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Certification vs Degree: Why Both Matter</div>
+        <div class="answer">
+          <p>
+            A degree provides academic foundation, but certification focuses on practical and industry-relevant skills. Employers prefer candidates who combine both theory and application.
+          </p>
+          <p>Certifications help bridge the gap between:</p>
+          <ul>
+            <li>Classroom learning and real-world application</li>
+            <li>Academic knowledge and job requirements</li>
+            <li>Fresher profiles and experienced roles</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Certifications That Employers Value</div>
+        <div class="answer">
+          <p>Industry-recognized certifications in areas such as:</p>
+          <ul>
+            <li>Full Stack Development</li>
+            <li>Python and Programming Languages</li>
+            <li>Data Science & Analytics</li>
+            <li>Artificial Intelligence & Machine Learning</li>
+            <li>Digital Marketing</li>
+            <li>UI/UX Design</li>
+          </ul>
+          <p>
+            These certifications increase employability and open doors to multiple career paths.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">How Rohil NextGen Supports Certification Success</div>
+        <div class="answer">
+          <p>
+            At Rohil NextGen, we provide certification-focused training that prepares students for both exams and careers. Our approach includes:
+          </p>
+          <ul>
+            <li>Practical hands-on training</li>
+            <li>Real-time projects</li>
+            <li>Industry-aligned curriculum</li>
+            <li>Skill-based assessments</li>
+            <li>Career-oriented guidance</li>
+          </ul>
+          <p>
+            We ensure learners earn certifications that truly add value to their professional profiles.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Stand Out, Get Noticed, Get Hired</div>
+        <div class="answer">
+          <p>
+            In a competitive job market, certification is your identity proof of skills. It tells employers that you are trained, tested, and ready to perform. When combined with practical experience, certification becomes a powerful tool for career success.
+          </p>
+          <p>
+            Join <strong>Rohil NextGen</strong> and earn certifications that move your career forward.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  `
+      },
+
+      {
+        id: 17,
+        title: "Best Programming Languages to Learn for High-Paying Jobs",
+        excerpt: "Build skills that employers pay for. Learn the most in-demand programming languages that offer high salaries, career growth, and long-term stability in today's competitive IT job market.",
+        image: "./images/High-Paying Jobs.png",
+        date: "February 10, 2026",
+        category: "Best Programming Language Suggestions",
+        author: "Rohil NextGen",
+        relatedContent: `
+    <div class="interview-questions">
+
+      <h4>Best Programming Languages to Learn for High-Paying Jobs</h4>
+      <p><strong>Rohil NextGen Date:</strong> 10.02.2026</p>
+
+      <div class="question-item">
+        <div class="question">Build Skills That Employers Pay For</div>
+        <div class="answer">
+          <p>
+            In today's competitive IT job market, learning the right programming language can significantly impact your salary and career growth.
+          </p>
+          <p>
+            Companies are no longer looking for just degrees—they want professionals with strong coding skills that solve real-world problems.
+          </p>
+          <p>
+            At Rohil NextGen, we guide students toward programming languages that offer high-paying job opportunities and long-term career stability.
+          </p>
+          <p>
+            Choosing the right language is the first step toward a successful tech career.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Why Programming Languages Matter for High Salaries</div>
+        <div class="answer">
+          <p>
+            Programming languages form the foundation of modern technology. From web applications and mobile apps to data science and artificial intelligence, every digital solution depends on efficient coding.
+          </p>
+          <p>Learning the right programming language helps you:</p>
+          <ul>
+            <li>Access high-paying job roles</li>
+            <li>Work across multiple industries</li>
+            <li>Build scalable and secure applications</li>
+            <li>Stay relevant in a fast-changing tech world</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Top Programming Languages for High-Paying Careers</div>
+        <div class="answer">
+          <p>The following programming languages are among the most in-demand and highest-paying across global IT markets:</p>
+          <ul>
+            <li><strong>Python:</strong> Widely used in data science, AI, machine learning, and automation. Known for simplicity and powerful libraries.</li>
+            <li><strong>Java:</strong> A strong choice for enterprise applications, backend systems, and Android development with excellent salary growth.</li>
+            <li><strong>JavaScript:</strong> Essential for frontend and full stack development using frameworks like React and Angular.</li>
+            <li><strong>C++:</strong> Used in system-level programming, game development, and performance-critical applications.</li>
+            <li><strong>Go (Golang):</strong> Popular for cloud computing and scalable backend systems.</li>
+            <li><strong>SQL:</strong> A must-have skill for database management, analytics, and data-driven roles.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">High-Paying Career Roles You Can Target</div>
+        <div class="answer">
+          <p>By mastering these programming languages, learners can pursue roles such as:</p>
+          <ul>
+            <li>Software Developer</li>
+            <li>Full Stack Developer</li>
+            <li>Data Scientist</li>
+            <li>Backend Engineer</li>
+            <li>Cloud Engineer</li>
+            <li>AI & Machine Learning Engineer</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">How Rohil NextGen Helps You Succeed</div>
+        <div class="answer">
+          <p>At Rohil NextGen, we focus on more than just syntax. Our training includes:</p>
+          <ul>
+            <li>Practical coding sessions</li>
+            <li>Real-world projects</li>
+            <li>Industry-relevant curriculum</li>
+            <li>Career guidance and skill development</li>
+            <li>Beginner-friendly learning approach</li>
+          </ul>
+          <p>
+            We ensure students gain confidence to apply their skills in real job environments.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Choose Smart, Earn More</div>
+        <div class="answer">
+          <p>
+            High-paying jobs are not about learning many languages—but mastering the right ones.
+          </p>
+          <p>
+            With expert guidance and hands-on training, your programming skills can open doors to global career opportunities.
+          </p>
+          <p>
+            Join <strong>Rohil NextGen</strong> and start building a high-paying tech career today.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  `
+      },
+
+      {
+        id: 16,
+        title: "Top IT Courses in Virudhunagar That Guarantee Career Growth",
+        excerpt: "Build future-ready skills with the right IT training. Discover how Virudhunagar is emerging as a technology education hub and how Rohil NextGen prepares students for successful IT careers with industry-relevant courses.",
+        image: "./images/techblog16.png",
+        date: "February 3, 2026",
+        category: "Career & Skills Growth",
+        author: "Rohil NextGen",
+        relatedContent: `
+    <div class="interview-questions">
+
+      <h4>Top IT Courses in Virudhunagar That Guarantee Career Growth</h4>
+
+      <div class="question-item">
+        <div class="question">Introduction: Building Future-Ready Skills in Virudhunagar</div>
+        <div class="answer">
+          <p>
+            In today's digital world, choosing the right IT course is the key to long-term career success.
+          </p>
+          <p>
+            Virudhunagar is emerging as a growing hub for technology education, offering students excellent opportunities to gain industry-relevant skills.
+          </p>
+          <p>
+            At Rohil NextGen, we focus on practical training that helps students build strong careers in the IT industry, with courses designed to match current industry demands and future job trends.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Why IT Courses Matter More Than Ever</div>
+        <div class="answer">
+          <p>
+            Technology is driving every industry—from business and healthcare to education and finance.
+          </p>
+          <p>Skilled IT professionals are in high demand, and companies look for candidates who can apply knowledge in real-world scenarios.</p>
+          <p>The right IT course helps you:</p>
+          <ul>
+            <li>Gain job-ready technical skills</li>
+            <li>Improve problem-solving and logical thinking</li>
+            <li>Access high-paying career opportunities</li>
+            <li>Stay relevant in a competitive job market</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Top IT Courses for Career Growth at Rohil NextGen</div>
+        <div class="answer">
+          <p>
+            At Rohil NextGen, we offer carefully structured IT courses that open doors to multiple career paths.
+          </p>
+          <p>Our most popular and high-demand courses include:</p>
+          <ul>
+            <li>Full Stack Development – Build complete web applications and become industry-ready</li>
+            <li>Python Programming – Ideal for beginners and advanced learners with wide career scope</li>
+            <li>Data Science & Analytics – Turn data into smart business decisions</li>
+            <li>Artificial Intelligence & Machine Learning – Future-focused skills for next-gen careers</li>
+            <li>Digital Marketing – High-demand skills for business growth and freelancing</li>
+            <li>UI/UX Design – Perfect for creative minds in the tech industry</li>
+          </ul>
+          <p>
+            Each course is designed with industry requirements in mind, ensuring students learn skills that employers actually need.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Why Choose Rohil NextGen in Virudhunagar</div>
+        <div class="answer">
+          <p>
+            Rohil NextGen stands out by offering more than just classroom learning. We focus on comprehensive skill development that prepares students for real-world challenges.
+          </p>
+          <p>Our unique advantages include:</p>
+          <ul>
+            <li>Hands-on practical training with live projects</li>
+            <li>Real-time projects and industry case studies</li>
+            <li>Industry-relevant curriculum updated regularly</li>
+            <li>Expert trainers with professional experience</li>
+            <li>Personalized career guidance and placement support</li>
+            <li>Skill development tailored to actual job roles</li>
+          </ul>
+          <p>
+            Our goal is to help students transform theoretical knowledge into practical confidence and career success.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Virudhunagar: An Emerging Hub for IT Education</div>
+        <div class="answer">
+          <p>
+            Virudhunagar is rapidly becoming a preferred destination for quality IT education in Tamil Nadu.
+          </p>
+          <p>The city offers:</p>
+          <ul>
+            <li>Affordable education compared to metropolitan cities</li>
+            <li>Growing IT infrastructure and opportunities</li>
+            <li>Access to experienced trainers and professionals</li>
+            <li>Strong local industry connections</li>
+            <li>Conducive learning environment</li>
+          </ul>
+          <p>
+            Rohil NextGen leverages these advantages to provide world-class IT training right here in Virudhunagar.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Career Opportunities After Completing IT Courses</div>
+        <div class="answer">
+          <p>
+            Completing the right IT course opens multiple career paths with excellent growth potential.
+          </p>
+          <p>Graduates from our programs can pursue roles such as:</p>
+          <ul>
+            <li>Software Developer/Engineer</li>
+            <li>Web Developer (Frontend/Backend/Full Stack)</li>
+            <li>Data Analyst/Scientist</li>
+            <li>AI/ML Engineer</li>
+            <li>Digital Marketing Specialist</li>
+            <li>UI/UX Designer</li>
+            <li>IT Consultant</li>
+          </ul>
+          <p>
+            Many of our students have secured positions in reputed companies, while others have successfully started their own ventures or freelance careers.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Our Teaching Methodology: Learning by Doing</div>
+        <div class="answer">
+          <p>
+            At Rohil NextGen, we believe in "learning by doing" rather than just theoretical instruction.
+          </p>
+          <p>Our teaching approach includes:</p>
+          <ul>
+            <li>Interactive coding sessions and workshops</li>
+            <li>Real-world project development from day one</li>
+            <li>Regular assessments and feedback</li>
+            <li>Industry guest lectures and sessions</li>
+            <li>Portfolio building with multiple projects</li>
+            <li>Mock interviews and resume building</li>
+          </ul>
+          <p>
+            This practical approach ensures students are job-ready upon course completion.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Start Your Career Growth Today</div>
+        <div class="answer">
+          <p>
+            Choosing the right IT course can shape your future. With the right guidance, skills, and practical exposure, success becomes achievable.
+          </p>
+          <p>
+            Rohil NextGen provides the platform you need to grow, learn, and succeed in the IT industry.
+          </p>
+          <p>
+            Enroll at Rohil NextGen and take the first step toward a successful IT career in Virudhunagar.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  `
+      },
+      {
+        id: 17,
+        title: "Best Programming Languages to Learn for High-Paying Jobs",
+        excerpt: "Build skills that employers pay for. Learn the most in-demand programming languages that offer high salaries, career growth, and long-term stability in today’s competitive IT job market.",
+        image: "./images/High-Paying Jobs.png",
+        date: "February 10, 2026",
+        category: "High Paying Jobs with Programming Languages",
+        author: "Rohil NextGen",
+        relatedContent: `
+    <div class="interview-questions">
+
+      <h4>Best Programming Languages to Learn for High-Paying Jobs</h4>
+      <p><strong>Rohil NextGen Date:</strong> 10.02.2026</p>
+
+      <div class="question-item">
+        <div class="question">Build Skills That Employers Pay For</div>
+        <div class="answer">
+          <p>
+            In today’s competitive IT job market, learning the right programming language can significantly impact your salary and career growth.
+          </p>
+          <p>
+            Companies are no longer looking for just degrees—they want professionals with strong coding skills that solve real-world problems.
+          </p>
+          <p>
+            At Rohil NextGen, we guide students toward programming languages that offer high-paying job opportunities and long-term career stability.
+          </p>
+          <p>
+            Choosing the right language is the first step toward a successful tech career.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Why Programming Languages Matter for High Salaries</div>
+        <div class="answer">
+          <p>
+            Programming languages form the foundation of modern technology. From web applications and mobile apps to data science and artificial intelligence, every digital solution depends on efficient coding.
+          </p>
+          <p>Learning the right programming language helps you:</p>
+          <ul>
+            <li>Access high-paying job roles</li>
+            <li>Work across multiple industries</li>
+            <li>Build scalable and secure applications</li>
+            <li>Stay relevant in a fast-changing tech world</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Top Programming Languages for High-Paying Careers</div>
+        <div class="answer">
+          <p>The following programming languages are among the most in-demand and highest-paying across global IT markets:</p>
+          <ul>
+            <li><strong>Python:</strong> Widely used in data science, AI, machine learning, and automation. Known for simplicity and powerful libraries.</li>
+            <li><strong>Java:</strong> A strong choice for enterprise applications, backend systems, and Android development with excellent salary growth.</li>
+            <li><strong>JavaScript:</strong> Essential for frontend and full stack development using frameworks like React and Angular.</li>
+            <li><strong>C++:</strong> Used in system-level programming, game development, and performance-critical applications.</li>
+            <li><strong>Go (Golang):</strong> Popular for cloud computing and scalable backend systems.</li>
+            <li><strong>SQL:</strong> A must-have skill for database management, analytics, and data-driven roles.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">High-Paying Career Roles You Can Target</div>
+        <div class="answer">
+          <p>By mastering these programming languages, learners can pursue roles such as:</p>
+          <ul>
+            <li>Software Developer</li>
+            <li>Full Stack Developer</li>
+            <li>Data Scientist</li>
+            <li>Backend Engineer</li>
+            <li>Cloud Engineer</li>
+            <li>AI & Machine Learning Engineer</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">How Rohil NextGen Helps You Succeed</div>
+        <div class="answer">
+          <p>At Rohil NextGen, we focus on more than just syntax. Our training includes:</p>
+          <ul>
+            <li>Practical coding sessions</li>
+            <li>Real-world projects</li>
+            <li>Industry-relevant curriculum</li>
+            <li>Career guidance and skill development</li>
+            <li>Beginner-friendly learning approach</li>
+          </ul>
+          <p>
+            We ensure students gain confidence to apply their skills in real job environments.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Choose Smart, Earn More</div>
+        <div class="answer">
+          <p>
+            High-paying jobs are not about learning many languages—but mastering the right ones.
+          </p>
+          <p>
+            With expert guidance and hands-on training, your programming skills can open doors to global career opportunities.
+          </p>
+          <p>
+            Join <strong>Rohil NextGen</strong> and start building a high-paying tech career today.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  `
+      },
+
+      {
+        id: 16,
+        title: "Top IT Courses in Virudhunagar That Guarantee Career Growth",
+        excerpt: "Build future-ready skills with the right IT training. Discover how Virudhunagar is emerging as a technology education hub and how Rohil NextGen prepares students for successful IT careers with industry-relevant courses.",
+        image: "./images/techblog16.png",
+        date: "February 3, 2026",
+        category: "IT Courses in Virudhunagar",
+        author: "Rohil NextGen",
+        relatedContent: `
+    <div class="interview-questions">
+
+      <h4>Top IT Courses in Virudhunagar That Guarantee Career Growth</h4>
+
+      <div class="question-item">
+        <div class="question">Introduction: Building Future-Ready Skills in Virudhunagar</div>
+        <div class="answer">
+          <p>
+            In today's digital world, choosing the right IT course is the key to long-term career success.
+          </p>
+          <p>
+            Virudhunagar is emerging as a growing hub for technology education, offering students excellent opportunities to gain industry-relevant skills.
+          </p>
+          <p>
+            At Rohil NextGen, we focus on practical training that helps students build strong careers in the IT industry, with courses designed to match current industry demands and future job trends.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Why IT Courses Matter More Than Ever</div>
+        <div class="answer">
+          <p>
+            Technology is driving every industry—from business and healthcare to education and finance.
+          </p>
+          <p>Skilled IT professionals are in high demand, and companies look for candidates who can apply knowledge in real-world scenarios.</p>
+          <p>The right IT course helps you:</p>
+          <ul>
+            <li>Gain job-ready technical skills</li>
+            <li>Improve problem-solving and logical thinking</li>
+            <li>Access high-paying career opportunities</li>
+            <li>Stay relevant in a competitive job market</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Top IT Courses for Career Growth at Rohil NextGen</div>
+        <div class="answer">
+          <p>
+            At Rohil NextGen, we offer carefully structured IT courses that open doors to multiple career paths.
+          </p>
+          <p>Our most popular and high-demand courses include:</p>
+          <ul>
+            <li>Full Stack Development – Build complete web applications and become industry-ready</li>
+            <li>Python Programming – Ideal for beginners and advanced learners with wide career scope</li>
+            <li>Data Science & Analytics – Turn data into smart business decisions</li>
+            <li>Artificial Intelligence & Machine Learning – Future-focused skills for next-gen careers</li>
+            <li>Digital Marketing – High-demand skills for business growth and freelancing</li>
+            <li>UI/UX Design – Perfect for creative minds in the tech industry</li>
+          </ul>
+          <p>
+            Each course is designed with industry requirements in mind, ensuring students learn skills that employers actually need.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Why Choose Rohil NextGen in Virudhunagar</div>
+        <div class="answer">
+          <p>
+            Rohil NextGen stands out by offering more than just classroom learning. We focus on comprehensive skill development that prepares students for real-world challenges.
+          </p>
+          <p>Our unique advantages include:</p>
+          <ul>
+            <li>Hands-on practical training with live projects</li>
+            <li>Real-time projects and industry case studies</li>
+            <li>Industry-relevant curriculum updated regularly</li>
+            <li>Expert trainers with professional experience</li>
+            <li>Personalized career guidance and placement support</li>
+            <li>Skill development tailored to actual job roles</li>
+          </ul>
+          <p>
+            Our goal is to help students transform theoretical knowledge into practical confidence and career success.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Virudhunagar: An Emerging Hub for IT Education</div>
+        <div class="answer">
+          <p>
+            Virudhunagar is rapidly becoming a preferred destination for quality IT education in Tamil Nadu.
+          </p>
+          <p>The city offers:</p>
+          <ul>
+            <li>Affordable education compared to metropolitan cities</li>
+            <li>Growing IT infrastructure and opportunities</li>
+            <li>Access to experienced trainers and professionals</li>
+            <li>Strong local industry connections</li>
+            <li>Conducive learning environment</li>
+          </ul>
+          <p>
+            Rohil NextGen leverages these advantages to provide world-class IT training right here in Virudhunagar.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Career Opportunities After Completing IT Courses</div>
+        <div class="answer">
+          <p>
+            Completing the right IT course opens multiple career paths with excellent growth potential.
+          </p>
+          <p>Graduates from our programs can pursue roles such as:</p>
+          <ul>
+            <li>Software Developer/Engineer</li>
+            <li>Web Developer (Frontend/Backend/Full Stack)</li>
+            <li>Data Analyst/Scientist</li>
+            <li>AI/ML Engineer</li>
+            <li>Digital Marketing Specialist</li>
+            <li>UI/UX Designer</li>
+            <li>IT Consultant</li>
+          </ul>
+          <p>
+            Many of our students have secured positions in reputed companies, while others have successfully started their own ventures or freelance careers.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Our Teaching Methodology: Learning by Doing</div>
+        <div class="answer">
+          <p>
+            At Rohil NextGen, we believe in "learning by doing" rather than just theoretical instruction.
+          </p>
+          <p>Our teaching approach includes:</p>
+          <ul>
+            <li>Interactive coding sessions and workshops</li>
+            <li>Real-world project development from day one</li>
+            <li>Regular assessments and feedback</li>
+            <li>Industry guest lectures and sessions</li>
+            <li>Portfolio building with multiple projects</li>
+            <li>Mock interviews and resume building</li>
+          </ul>
+          <p>
+            This practical approach ensures students are job-ready upon course completion.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Start Your Career Growth Today</div>
+        <div class="answer">
+          <p>
+            Choosing the right IT course can shape your future. With the right guidance, skills, and practical exposure, success becomes achievable.
+          </p>
+          <p>
+            Rohil NextGen provides the platform you need to grow, learn, and succeed in the IT industry.
+          </p>
+          <p>
+            Enroll at Rohil NextGen and take the first step toward a successful IT career in Virudhunagar.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  `
+      },
+      {
+        id: 15,
+        title: "Why Full Stack Development Is the Most In-Demand Career in 2026",
+        excerpt: "Discover why Full Stack Developers are dominating the 2026 job market, how they build complete web solutions with one powerful skill set, and how Rohil NextGen prepares students for this high-demand career.",
+        image: "./images/fullstack-blog.png",
+        date: "January 27, 2026",
+        category: "Fullstack Development Grow your skills",
+        author: "Rohil NextGen",
+        relatedContent: `
+    <div class="interview-questions">
+
+      <h4>Why Full Stack Development Is the Most In-Demand Career in 2026</h4>
+
+      <div class="question-item">
+        <div class="question">Introduction: The Rise of the Complete Developer</div>
+        <div class="answer">
+          <p>
+            In 2026, the technology industry is evolving faster than ever, and companies are looking for professionals who can do more than just one role.
+          </p>
+          <p>
+            This is where Full Stack Development stands out as one of the most in-demand and future-proof careers.
+          </p>
+          <p>
+            A Full Stack Developer has the ability to design, develop, and deploy complete web applications, making them extremely valuable in today's digital-first world.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">What Is Full Stack Development?</div>
+        <div class="answer">
+          <p>
+            Full Stack Development refers to the ability to work on both frontend and backend technologies of a web application.
+          </p>
+          <p>A Full Stack Developer understands:</p>
+          <ul>
+            <li>Frontend technologies like HTML, CSS, JavaScript, and modern frameworks</li>
+            <li>Backend programming, databases, and server-side logic</li>
+            <li>Application deployment, performance, and security basics</li>
+          </ul>
+          <p>
+            Instead of relying on multiple specialists, companies prefer Full Stack Developers who can handle end-to-end development efficiently.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Why Full Stack Development Is in High Demand in 2026</div>
+        <div class="answer">
+          <p>
+            The demand for Full Stack Developers continues to grow because businesses need faster, smarter, and scalable digital solutions.
+          </p>
+          <p>Full Stack Development is essential for startups, enterprises, IT companies, and digital platforms.</p>
+          <p>Key reasons for its growing demand include:</p>
+          <ul>
+            <li>Rapid growth of web and mobile applications</li>
+            <li>Increased demand for cost-effective development teams</li>
+            <li>Startups preferring multi-skilled developers</li>
+            <li>Expansion of cloud-based and SaaS applications</li>
+            <li>Continuous evolution of web technologies</li>
+          </ul>
+          <p>
+            Full Stack Developers help companies reduce development time, improve collaboration, and build high-quality applications faster.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Career Opportunities for Full Stack Developers</div>
+        <div class="answer">
+          <p>
+            Full Stack Development opens doors to multiple high-paying career paths.
+          </p>
+          <p>Professionals with full stack skills can work in roles such as:</p>
+          <ul>
+            <li>Full Stack Developer</li>
+            <li>Software Engineer</li>
+            <li>Web Application Developer</li>
+            <li>Backend or Frontend Developer</li>
+            <li>Technical Lead or Solution Architect</li>
+          </ul>
+          <p>
+            With experience, Full Stack Developers can also move into freelancing, entrepreneurship, and product development, making this career both flexible and financially rewarding.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Skills You Gain Through Full Stack Development</div>
+        <div class="answer">
+          <p>
+            Learning Full Stack Development builds strong technical and problem-solving abilities.
+          </p>
+          <p>Some key skills include:</p>
+          <ul>
+            <li>Programming and logic building</li>
+            <li>Database design and management</li>
+            <li>API development and integration</li>
+            <li>Debugging and optimization</li>
+            <li>Application deployment and maintenance</li>
+          </ul>
+          <p>
+            These skills make developers adaptable to changing technologies and support long-term career growth.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">How Rohil NextGen Prepares You for a Full Stack Career</div>
+        <div class="answer">
+          <p>
+            At Rohil NextGen, we focus on practical, industry-oriented training to ensure students gain real-world skills.
+          </p>
+          <p>Our Full Stack Development training includes:</p>
+          <ul>
+            <li>Beginner-friendly step-by-step learning</li>
+            <li>Hands-on coding and live projects</li>
+            <li>Real-time application development</li>
+            <li>Industry-relevant tools and frameworks</li>
+            <li>Career guidance and skill-building support</li>
+          </ul>
+          <p>
+            We ensure learners not only understand concepts but also gain the confidence to build complete applications independently.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Who Should Learn Full Stack Development?</div>
+        <div class="answer">
+          <p>Full Stack Development is ideal for:</p>
+          <ul>
+            <li>Students and fresh graduates</li>
+            <li>Career switchers entering the IT field</li>
+            <li>Aspiring software developers</li>
+            <li>Entrepreneurs building digital products</li>
+            <li>Professionals upgrading technical skills</li>
+          </ul>
+          <p>
+            No matter your background, our structured training helps you start from basics and grow into an industry-ready professional.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Future-Proof Your Career with Full Stack Development</div>
+        <div class="answer">
+          <p>
+            Technology will continue to evolve, but Full Stack Development remains a core skill across industries.
+          </p>
+          <p>
+            Professionals who understand the complete development cycle will always stay ahead in the job market.
+          </p>
+          <p>
+            By choosing Full Stack Development at Rohil NextGen, you invest in a skill set that offers stability, growth, and long-term career success.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  `
+      },
+      {
+        id: 14,
+        title: "The Skill-First Revolution: Why 2026 Belongs to the Specialist",
+        excerpt:
+          "Discover why 2026 belongs to skill-first specialists, how hiring has shifted from degrees to verified competence, and how Rohil NextGen prepares students for future-ready tech careers.",
+        image: "./images/skill.png",
+        date: "January 21, 2026",
+        category: "Career & Skills",
+        author: "Rohil NextGen",
+        relatedContent: `
+    <div class="interview-questions">
+
+      <h4>The Skill-First Revolution: Why 2026 Belongs to the Specialist</h4>
+
+      <div class="question-item">
+        <div class="question">Introduction: From Degrees to Demonstrated Skills</div>
+        <div class="answer">
+          <p>
+            For decades, a college degree acted as the primary gateway to employment.
+            In 2026, that reality has fundamentally changed.
+          </p>
+          <p>
+            Employers are no longer impressed by certificates alone—they demand
+            proof of real, job-ready skills. This shift has triggered the
+            <strong>Skill-First Revolution</strong>.
+          </p>
+          <p>
+            Specialists with proven competence are now outperforming traditional
+            degree holders in the job market.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">The Shift in Hiring Architecture</div>
+        <div class="answer">
+          <p>
+            Earlier, HR teams relied heavily on degrees as the first screening filter.
+            Today, hiring systems are skill-driven and automated.
+          </p>
+          <p>Modern companies evaluate candidates through:</p>
+          <ul>
+            <li>Practical coding challenges</li>
+            <li>Tool-specific tasks (Flutter, DevOps, AI-based Python workflows)</li>
+            <li>Real-world problem-solving assessments</li>
+          </ul>
+          <p>
+            Only candidates who prove competence move forward. Your university name
+            matters less than your verified ability.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Why Rohil NextGen's Model Works in 2026</div>
+        <div class="answer">
+          <p>
+            Traditional degree programs struggle to keep pace with rapidly evolving
+            technologies. Industry tools now change every six months.
+          </p>
+          <p>
+            Rohil NextGen bridges this gap with an industry-aligned, practical learning model.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Agility: Learning What the Industry Uses Now</div>
+        <div class="answer">
+          <p>Rohil NextGen students master modern, in-demand technologies such as:</p>
+          <ul>
+            <li>Updated MERN Stack</li>
+            <li>Production-level Kubernetes & cloud deployments</li>
+            <li>Modern CI/CD and DevOps workflows</li>
+          </ul>
+          <p>
+            This agility ensures students remain relevant and employable in the 2026 job market.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Proof of Work: The New Resume</div>
+        <div class="answer">
+          <p>
+            In today's economy, a project portfolio has replaced the traditional resume.
+          </p>
+          <p>Employers prioritize candidates who can demonstrate:</p>
+          <ul>
+            <li>Live, deployed applications</li>
+            <li>Secure payment integrations</li>
+            <li>Real-world use cases and performance optimization</li>
+          </ul>
+          <p>
+            Rohil NextGen emphasizes hands-on projects that recruiters can directly verify.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">The "Double-Threat" Developer</div>
+        <div class="answer">
+          <p>Companies now look for professionals who combine:</p>
+          <ul>
+            <li><strong>Hard Skills:</strong> Programming, cloud, DevOps, frameworks</li>
+            <li><strong>Soft Skills:</strong> Communication, teamwork, agile collaboration</li>
+          </ul>
+          <p>
+            Rohil NextGen trains students to become Double-Threat Developers—technically
+            strong and workplace-ready.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">How to Build a Skills-First Identity</div>
+        <div class="answer">
+          <ol>
+            <li>
+              <strong>Niche Down:</strong> Become a specialist, not a generic coder.
+              Example: Flutter expert with secure payment integration.
+            </li>
+            <li>
+              <strong>Certify and Verify:</strong> Rohil NextGen certifications validate
+              real, hands-on competence.
+            </li>
+            <li>
+              <strong>Practice Public Learning:</strong> Share blogs, GitHub projects,
+              and real bug fixes to build credibility.
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Conclusion: Why 2026 Belongs to Specialists</div>
+        <div class="answer">
+          <p>
+            The future of hiring is clear: skills over degrees, proof over promises,
+            and specialists over generalists.
+          </p>
+          <p>
+            With its skill-first, project-driven approach, <strong>Rohil NextGen</strong>
+            prepares students not just for jobs—but for long-term, future-ready careers.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  `
+      },
+      {
+        id: 13,
+        title: "Most People Think Their Job Is Safe From AI. They're Wrong.",
+        excerpt:
+          "Artificial Intelligence is no longer the future—it's already transforming jobs. Discover why traditional skills are no longer enough and how Rohil NextGen helps you stay relevant in the AI era.",
+        image: "./images/jobidsafe.jpg",
+        date: "January 13, 2026",
+        category: "Artificial Intelligence",
+        author: "Rohil NextGen",
+        relatedContent: `
+  <div class="interview-questions">
+
+    <h4>Most People Think Their Job Is Safe From AI. They're Wrong.</h4>
+
+    <div class="question-item">
+      <div class="question">Introduction</div>
+      <div class="answer">
+        <p>
+          Artificial Intelligence (AI) is no longer a future concept—it is a present-day
+          reality that is transforming industries, redefining careers, and reshaping how
+          businesses operate.
+        </p>
+        <p>
+          While many professionals believe their jobs are secure, the truth is far more
+          serious. AI is rapidly replacing outdated skills.
+        </p>
+        <p>
+          At <strong>Rohil NextGen</strong>, we help students and professionals stay relevant
+          by equipping them with digital and AI-powered skills required in today's global
+          job market.
+        </p>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <div class="question">How Artificial Intelligence Is Disrupting the Workforce</div>
+      <div class="answer">
+        <p>AI is now being used across multiple industries, including:</p>
+        <ul>
+          <li>Digital Marketing</li>
+          <li>Finance & Banking</li>
+          <li>Customer Support</li>
+          <li>HR & Recruitment</li>
+          <li>Data Analytics</li>
+          <li>Software Development</li>
+          <li>E-commerce</li>
+        </ul>
+        <p>
+          Tasks such as data processing, basic design, reporting, and customer service
+          are increasingly automated. Professionals who rely only on traditional skills
+          now face growing job insecurity.
+        </p>
+        <p>
+          However, those who know how to work with AI are becoming more valuable than ever.
+        </p>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <div class="question">Why Degrees Alone Are No Longer Enough</div>
+      <div class="answer">
+        <p>
+          A university degree no longer guarantees employment. Employers now prioritize
+          practical skills, adaptability, and technology expertise over academic certificates.
+        </p>
+        <p>Companies are looking for professionals who can:</p>
+        <ul>
+          <li>Use AI tools to improve productivity</li>
+          <li>Analyze data to make informed decisions</li>
+          <li>Build and manage digital platforms</li>
+          <li>Execute digital marketing strategies</li>
+          <li>Automate business operations</li>
+        </ul>
+        <p>
+          This shift makes skill-based training essential for long-term career success.
+        </p>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <div class="question">High-Demand AI-Ready Skills for the Future</div>
+      <div class="answer">
+        <p>
+          To stay competitive in the AI era, professionals must learn skills that
+          complement AI rather than compete with it.
+        </p>
+        <ul>
+          <li>Digital Marketing with AI tools</li>
+          <li>Web Development and Automation</li>
+          <li>Search Engine Optimization (SEO)</li>
+          <li>Data Analytics</li>
+          <li>UI/UX Design</li>
+          <li>Performance Marketing</li>
+          <li>AI-assisted Content Creation</li>
+        </ul>
+        <p>
+          These skills allow individuals to use AI as a powerful tool—not a threat.
+        </p>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <div class="question">How Rohil NextGen Prepares You for Tomorrow</div>
+      <div class="answer">
+        <p>
+          Rohil NextGen is a career-focused digital training institute dedicated to building
+          future-ready professionals. Our programs are designed with industry experts to
+          match real-world job requirements.
+        </p>
+        <ul>
+          <li>Practical, hands-on training</li>
+          <li>Industry-relevant projects</li>
+          <li>AI-enabled learning tools</li>
+          <li>Internship opportunities</li>
+          <li>Placement support</li>
+          <li>Career mentoring</li>
+        </ul>
+        <p>
+          Our mission is simple: to make you employable, confident, and ready for the future.
+        </p>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <div class="question">The Future Belongs to Those Who Upskill</div>
+      <div class="answer">
+        <p>
+          AI will continue to grow, and jobs will continue to evolve. The only way to stay
+          secure is to keep learning.
+        </p>
+        <p>
+          Those who invest in upgrading their skills today will lead tomorrow's workforce.
+          Let <strong>Rohil NextGen</strong> help you build a successful and future-proof career.
+        </p>
+      </div>
+    </div>
+  </div>
+  `
+      },
+      {
+        id: 12,
+        title: "Game Theory Is the Cheat Code to Life – Learn Strategic Thinking",
+        excerpt:
+          "Success today is not just about hard work but smart decision-making. Learn how Game Theory helps you think strategically, predict outcomes, and make winning choices with Rohil NextGen.",
+        image: "./images/Game.jpg",
+        date: "January 6, 2026",
+        category: "Game Theory",
+        author: "Rohil NextGen",
+        relatedContent: `
+  <div class="interview-questions">
+    <h4>Game Theory Is the Cheat Code to Life – Learn Strategic Thinking</h4>
+
+    <div class="question-item">
+      <div class="question">Introduction</div>
+      <div class="answer">
+        <p>
+          In today's fast-paced and competitive world, success is not only about hard work,
+          but about making the right decisions at the right time.
+          Game Theory helps individuals think strategically and act wisely.
+        </p>
+        <p>
+          At <strong>Rohil NextGen</strong>, we introduce Game Theory as a practical life and career skill
+          that improves decision-making, strategic thinking, and competitive awareness.
+        </p>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <div class="question">What Is Game Theory?</div>
+      <div class="answer">
+        <p>
+          Game Theory is the study of strategic decision-making where outcomes depend
+          not only on your choices, but also on the choices of others.
+        </p>
+        <p>
+          It is used in salary negotiations, career planning, business strategy,
+          competitive exams, and everyday life decisions.
+        </p>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <div class="question">Why Game Theory Matters in Real Life and Careers</div>
+      <div class="answer">
+        <ul>
+          <li>Make confident and logical decisions</li>
+          <li>Anticipate competitor or opponent behavior</li>
+          <li>Reduce risks and maximize outcomes</li>
+          <li>Improve negotiation and problem-solving skills</li>
+          <li>Think long-term instead of reacting emotionally</li>
+        </ul>
+        <p>
+          Rohil NextGen teaches Game Theory using real-world examples for easy understanding.
+        </p>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <div class="question">Game Theory as a Career Skill</div>
+      <div class="answer">
+        <p>
+          Modern employers value professionals who can think strategically and solve complex problems.
+          Game Theory strengthens essential career skills.
+        </p>
+        <ul>
+          <li>Analytical and logical thinking</li>
+          <li>Strategic planning</li>
+          <li>Decision-making under uncertainty</li>
+          <li>Leadership and teamwork dynamics</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <div class="question">How Rohil NextGen Teaches Game Theory</div>
+      <div class="answer">
+        <ul>
+          <li>Simple explanations with real-life scenarios</li>
+          <li>Business and career-based case studies</li>
+          <li>Interactive discussions and problem-solving</li>
+          <li>Practical applications for daily decision-making</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <div class="question">Who Should Learn Game Theory?</div>
+      <div class="answer">
+        <ul>
+          <li>Engineering and Computer Science students</li>
+          <li>Fresh graduates preparing for competitive careers</li>
+          <li>Aspiring managers and entrepreneurs</li>
+          <li>Individuals aiming to improve strategic thinking</li>
+          <li>Professionals targeting leadership roles</li>
+        </ul>
+        <p>
+          No advanced background is required. Training starts from basics and builds step by step.
+        </p>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <div class="question">Learn to Play Smart, Not Just Hard</div>
+      <div class="answer">
+        <p>
+          Life and careers are full of choices. Those who understand strategy always stay ahead.
+          Game Theory is not just a subject—it is a powerful life skill.
+        </p>
+      </div>
+    </div>
+
+    <div class="question-item">
+      <div class="question">Join Rohil NextGen – Upgrade Your Strategic Thinking</div>
+      <div class="answer">
+        <p>
+          If you want to think smarter, compete better, and make confident decisions,
+          Rohil NextGen is the right place to start.
+        </p>
+        <p>
+          Enroll at <strong>Rohil NextGen</strong> and unlock the cheat code to strategic success.
+        </p>
+      </div>
+    </div>
+  </div>
+  `
+      },
+      {
+        id: 11,
+        title: "Common Cybersecurity Threats and How to Prevent Them",
+        excerpt:
+          "With rapid digital adoption, cybersecurity threats are increasing across industries. Learn about common cyber attacks and effective prevention techniques with guidance from Rohil NextGen.",
+        image: "./images/cybersecurity.jpg",
+        date: "December 30, 2025",
+        category: "Cybersecurity",
+        author: "Rohil NextGen",
+        relatedContent: `
+    <div class="interview-questions">
+      <h4>Common Cybersecurity Threats and How to Prevent Them</h4>
+
+      <div class="question-item">
+        <div class="question">Introduction</div>
+        <div class="answer">
+          <p>
+            With rapid digital adoption across industries, cybersecurity threats have become a major concern for businesses and IT professionals.
+            Cybercriminals continuously exploit system vulnerabilities, human errors, and unsecured networks.
+          </p>
+          <p>
+            At Rohil NextGen IT Training Institute, we equip students and professionals with practical cybersecurity knowledge
+            and industry-relevant skills to handle real-world cyber threats.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">1. Phishing Attacks</div>
+        <div class="answer">
+          <p><strong>What is a Phishing Attack?</strong></p>
+          <p>
+            Phishing is a social engineering technique where attackers send fake emails, messages, or websites
+            that appear legitimate to steal login credentials, financial information, or sensitive data.
+          </p>
+          <p><strong>Prevention Techniques (Training Perspective)</strong></p>
+          <ul>
+            <li>Identify suspicious email patterns and fake domains</li>
+            <li>Avoid clicking on unknown links or attachments</li>
+            <li>Enable multi-factor authentication (MFA)</li>
+            <li>Learn email security best practices</li>
+          </ul>
+          <p>
+            At Rohil NextGen, students analyze real phishing case studies and email attack simulations.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">2. Malware and Ransomware Attacks</div>
+        <div class="answer">
+          <p><strong>Understanding Malware</strong></p>
+          <p>
+            Malware includes viruses, trojans, spyware, and ransomware that can damage systems,
+            steal data, or encrypt files until a ransom is paid.
+          </p>
+          <p><strong>How to Prevent Malware Attacks</strong></p>
+          <ul>
+            <li>Install and configure antivirus and endpoint security tools</li>
+            <li>Keep operating systems and applications updated</li>
+            <li>Practice safe browsing and software installation</li>
+            <li>Implement regular data backup strategies</li>
+          </ul>
+          <p>
+            Our cybersecurity training covers malware analysis fundamentals and system protection techniques.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">3. Weak Password and Authentication Issues</div>
+        <div class="answer">
+          <p><strong>Why Password Security Matters</strong></p>
+          <p>
+            Weak or reused passwords are a leading cause of security breaches.
+            Attackers use brute-force and credential-stuffing techniques to gain unauthorized access.
+          </p>
+          <p><strong>Best Practices for Password Security</strong></p>
+          <ul>
+            <li>Create strong and unique passwords</li>
+            <li>Use password managers</li>
+            <li>Enable multi-factor authentication</li>
+            <li>Understand authentication mechanisms</li>
+          </ul>
+          <p>
+            Rohil NextGen trains students on authentication systems and access control concepts used in real IT environments.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">4. Insider Threats</div>
+        <div class="answer">
+          <p><strong>What Are Insider Threats?</strong></p>
+          <p>
+            Insider threats occur when employees or users misuse their access intentionally or unintentionally,
+            leading to data leaks or security breaches.
+          </p>
+          <p><strong>Prevention Methods</strong></p>
+          <ul>
+            <li>Implement role-based access control</li>
+            <li>Monitor user activity logs</li>
+            <li>Conduct cybersecurity awareness programs</li>
+            <li>Apply security policies and compliance standards</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">5. Unsecured Networks and Devices</div>
+        <div class="answer">
+          <p><strong>Network Security Risks</strong></p>
+          <p>
+            Unsecured Wi-Fi networks, outdated routers, and unmanaged devices allow attackers
+            to intercept data or gain unauthorized system access.
+          </p>
+          <p><strong>How to Secure Networks</strong></p>
+          <ul>
+            <li>Use firewalls and encrypted connections</li>
+            <li>Implement VPNs for remote access</li>
+            <li>Secure devices with updated security policies</li>
+            <li>Perform network security assessments</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Importance of Cybersecurity Education</div>
+        <div class="answer">
+          <p>
+            Cybersecurity is no longer optional—it is a critical skill for IT professionals.
+            Proper training helps individuals understand threat detection, prevention strategies,
+            compliance standards, and modern security tools.
+          </p>
+          <ul>
+            <li>Ethical Hacking</li>
+            <li>Network Security</li>
+            <li>SOC Analyst Roles</li>
+            <li>IT Security Administration</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Cybersecurity Training at Rohil NextGen</div>
+        <div class="answer">
+          <ul>
+            <li>Cybersecurity fundamentals</li>
+            <li>Network and system security</li>
+            <li>Ethical hacking basics</li>
+            <li>Practical labs and real-time scenarios</li>
+            <li>Career guidance and placement support</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Conclusion</div>
+        <div class="answer">
+          <p>
+            Understanding common cybersecurity threats and their prevention is essential for every aspiring IT professional.
+            With structured training and hands-on experience, individuals can build strong cybersecurity foundations
+            and secure their career future.
+          </p>
+          <p>
+            Start your cybersecurity learning journey with <strong>Rohil NextGen IT Training Institute</strong>
+            and become industry-ready.
+          </p>
+        </div>
+      </div>
+    </div>
+  `
+      },
+
+      {
+        id: 10,
+        title: "Cloud Computing Careers – Global Job Opportunities for Freshers",
+        excerpt:
+          "Cloud computing is one of the fastest-growing IT career paths with global job opportunities. Discover why freshers are choosing cloud careers and how Rohil NextGen helps you succeed.",
+        image: "./images/cc.jpg",
+        date: "December 23, 2025",
+        category: "Cloud Careers",
+        author: "Rohil NextGen",
+        relatedContent: `
+    <div class="interview-questions">
+      <h4>Cloud Computing Careers – Global Job Opportunities for Freshers</h4>
+
+      <div class="question-item">
+        <div class="question">Why Choose Cloud Computing as a Career?</div>
+        <div class="answer">
+          <p>
+            Cloud computing enables businesses to run applications, manage data, and scale securely using platforms like AWS, Microsoft Azure, and Google Cloud.
+            Due to rapid digital transformation, cloud professionals are in high demand across India and global markets.
+          </p>
+          <p>
+            Cloud computing is considered one of the fastest-growing and highest-paying IT career paths today.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Career Opportunities After Cloud Computing Training</div>
+        <div class="answer">
+          <ul>
+            <li>Cloud Support Engineer</li>
+            <li>Junior Cloud Engineer</li>
+            <li>Cloud Administrator</li>
+            <li>DevOps Trainee</li>
+            <li>Cloud Architect (with experience)</li>
+            <li>Cloud Consultant</li>
+          </ul>
+          <p>
+            Job opportunities are available in India, Middle East, Europe, USA, and remote global teams.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Skills You Will Learn at Rohil NextGen</div>
+        <div class="answer">
+          <ul>
+            <li>Cloud fundamentals (AWS / Azure / GCP basics)</li>
+            <li>Linux and networking essentials</li>
+            <li>Virtual machines & cloud infrastructure</li>
+            <li>Cloud security best practices</li>
+            <li>Real-time hands-on projects</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Why Rohil NextGen?</div>
+        <div class="answer">
+          <ul>
+            <li>Job-oriented cloud computing course</li>
+            <li>Beginner-friendly, practical training</li>
+            <li>Industry-relevant syllabus</li>
+            <li>Internship and placement guidance</li>
+            <li>Dedicated career support for freshers</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Start Your Cloud Career Today</div>
+        <div class="answer">
+          <p>
+            Cloud computing is a future-proof technology with excellent salary growth and global demand.
+            With expert training from Rohil NextGen, you can confidently step into the IT industry and build a successful cloud career.
+          </p>
+          <p>
+            <strong>📍 Location:</strong> Virudhunagar, Tamil Nadu<br/>
+            <strong>🌐 Website:</strong> www.rohilnextgen.com<br/>
+            <strong>📧 Email:</strong> admin@rohiltechnologies.com<br/>
+            <strong>📞 Phone:</strong> 9751867879
+          </p>
+        </div>
+      </div>
+    </div>
+  `
+      },
+
+      {
+        id: 9,
+        title: "How 50+ Engineers Got Promoted Fast – The One Thing They All Did",
+        excerpt:
+          "Are you a student or a young professional wondering how some engineers climb the career ladder faster than others? I recently studied 50+ engineers who got promoted quickly, and one surprising habit stood out among them.",
+        image: "./images/engineers.png",
+        date: "December 16, 2025",
+        category: "Career Growth Secrets", author: "Rohil NextGen",
+        relatedContent: `
+    <div class="interview-questions">
+      <h4>How 50+ Engineers Accelerated Their Career Growth</h4>
+
+      <div class="question-item">
+        <div class="question">The Secret Habit of Fast-Tracking Engineers</div>
+        <div class="answer">
+          <p>
+           All these engineers shared a common behavior: they focused on continuous learning and skill improvement beyond their regular tasks. They didn't just complete assignments; they learned new technologies, understood business impact, and solved problems proactively.
+          </p>
+          <p>
+            For students, this translates into:
+          </p>
+          <ul>
+            <li><strong>Upskilling regularly:</strong> Take online courses, workshops, and certifications in trending technologies.</li>
+            <li><strong>Practical application:</strong> Apply skills through projects, internships, or personal work.</li>
+            <li><strong>Networking:</strong> Connect with peers, seniors, and mentors for guidance.</li>
+            <li><strong>Problem-solving mindset:</strong> Look for ways to improve processes and add value.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Why This Works</div>
+        <div class="answer">
+          <p>
+           Companies promote engineers who add visible impact.
+            Technical knowledge alone isn't enough – those who show initiative and adaptability stand out. 
+            Students who adopt this habit early create a strong foundation for faster career growth.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Action Plan for Students</div>
+        <div class="answer">
+          <ul>
+            <strong>1. Identify key skills :</strong> Pick 1–2 skills in demand in your field.</li>
+            <strong>2. Apply them practically :</strong> Work on projects, internships, or personal challenges.</li>
+            <strong>3. Document achievements :</strong> Keep track of your progress – it helps during interviews and reviews.</li>
+            <strong>4. Stay proactive :</strong> Continuously look for ways to add value in whatever you do.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Conclusion</div>
+        <div class="answer">
+          <p>
+            Success isn't just about talent – it's about action, curiosity, and consistent growth. The engineers who got promoted fast didn't wait for opportunities; they created them by learning, innovating, and taking initiative. As a student, if you adopt the same mindset today, your career growth won't be a matter of
+             chance – it will be inevitable. Start now, stay curious, and make your future unstoppable!
+          </p>
+          <p>
+            As a student, if you start learning, innovating, and taking initiative
+            today, your career growth won't be accidental — it will be inevitable.
+            Start now and make your future unstoppable.
+          </p>
+        </div>
+      </div>
+    </div>
+  `,
+      },
+      {
+        id: 0,
+        title: "Your Resume Doesn't Matter Anymore – The Rise of Proof-of-Work",
+        excerpt: "Why tangible proof of your skills through projects and portfolios is becoming more important than traditional resumes in today's job market.",
+        image: "./images/resume.png",
+        date: "December 08, 2025",
+        category: "Career Development",
+        author: "Rohil NextGen",
+        relatedContent: `
+    <div class="interview-questions">
+      <h4>Why Proof-of-Work is Replacing Traditional Resumes</h4>
+
+      <div class="question-item">
+        <div class="answer">
+          <p>
+           In today's competitive job market, resumes alone are no longer enough.
+            Employers are moving beyond traditional CVs and focusing on proof-of-work –
+            tangible evidence of your skills and achievements. This trend emphasizes what
+            you have done over what you claim to know.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">What is Proof-of-Work?</div>
+        <div class="answer">
+          <p>
+            Proof-of-work (PoW) showcases real results through projects, portfolios, case
+            studies, or digital contributions. It can include:
+          </p>
+          <ul>
+            <li>Completed projects or assignments</li>
+            <li> Open-source contributions</li>
+            <li>Certifications with practical implementations</li>
+            <li>Real-world results from internships or freelance work</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Why it Matters:</div>
+        <div class="answer">
+          <ul>
+            <li><strong> Show, Don't Tell:</strong> Employers see your actual skills in action.</li>
+            <li><strong> Build Credibility: </strong> Tangible work proves your expertise.</li>
+            <li><strong>Career Growth:</strong>  A strong PoW portfolio can fast-track opportunities.</li>
+            <li><strong> Remote Opportunities:</strong> - Digital proof-of-work makes global hiring easier.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">How to Get Started:</div>
+        <div class="answer">
+          <ul>
+            <li>Create a personal portfolio showcasing your projects</li>
+            <li>Contribute to platforms like GitHub or Kaggle</li>
+            <li>Publish case studies or results on LinkedIn</li>
+            <li> Document results from real internships or freelance work</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="answer">
+          <p>
+           At RohilNextGen, we help students and professionals build portfolios that
+           make a real impact. By embracing the proof-of-work trend, you can stand out,
+            prove your capabilities, and land the opportunities you deserve.
+          </p>
+         <strong style="color: black">Start today – let your work speak louder than your resume!</strong>
+        </div>
+      </div>
+    </div>
+  `,
+      },
+      {
+        id: 1,
+        title: "How 2025's Latest Software Trends Shape What Students Must Learn — AI, No-Code & Cloud-Native Skills",
+        excerpt: "Explore how AI-assisted coding, cloud-native skills, and no-code platforms are becoming essential for the modern developer.",
+        image: "./images/software-trends.png",
+        date: "December 2, 2025",
+        category: "Software Trends",
+        author: "Rohil NextGen",
+        relatedContent: `
+    <div class="interview-questions">
+      <h4>How 2025's Software Trends Shape Student Learning</h4>
+      <div class="question-item">
+        <div class="question">The Evolving Developer Landscape in 2025</div>
+        <div class="answer">
+          <p>
+              The software development landscape is evolving at an unprecedented
+              pace in 2025. AI-powered coding assistants, low-code/no-code
+              platforms, and cloud-native development are redefining what it means
+              to be a developer. Traditional coding skills remain important, but
+              students who focus only on classical programming may miss out on the
+              opportunities that modern enterprise environments demand.          </p>
+        </div>
+      </div>
+      <div class="question-item">
+        <div class="answer">
+          <p>
+            At <strong>RohilNextGen</strong>, we emphasize the need for students to learn AI-
+            assisted development, cloud architecture, and low-code/no-code
+            platforms. AI tools can significantly speed up coding by suggesting
+            code snippets, automating repetitive tasks, and enabling smarter
+            problem-solving. Understanding cloud-native concepts such as
+            microservices, containers, and DevOps pipelines prepares students for
+            scalable, enterprise-grade applications. Meanwhile, mastering low-
+            code/no-code platforms allows students to quickly build functional
+            applications without heavy manual coding, making them highly
+            adaptable to diverse business needs.</p>
+          <ul>
+             </ul>
+        </div>
+      </div>
+      <div class="question-item">
+        <div class="question">Which skills are increasingly sought after by recruiters and tech companies?</div>
+        <div class="answer">
+          <p>
+            By gaining proficiency in these modern technologies, students acquire a
+            competitive edge: faster development cycles, increased productivity,
+            and the ability to work effectively on enterprise projects. These skills are
+            increasingly sought after by recruiters and tech companies looking for
+            versatile developers who can leverage AI, cloud, and automation in their
+            workflows.</p>    
+        </div>
+      </div>
+          <div class="question-item">
+        <div class="question">To help students stay ahead, RohilNextGen offers courses aligned with
+            these trends:</div>
+        <div class="answer">
+                   <ul>
+            <li><strong>AI-Assisted Development </strong> – Learn how to integrate AI tools into
+              coding workflows.</li>
+            <li><strong>Cloud-Native & DevOps Bootcamp </strong> – Master microservices,
+                containers, and cloud deployment.</li>
+            <li><strong>Low-Code Business App Development – </strong> Build functional
+              applications with minimal coding.</li>
+            <li><strong>Business Alignment:</strong> Build solutions that directly address operational needs.</li>
+          </ul>
+          <p>These programs are designed to equip students with future-ready skills
+            that meet the demands of modern IT companies. By embracing these
+            trends now, students not only enhance their employability but also
+            position themselves as innovators in the rapidly changing software
+            development ecosystem.</p>
+        </div>
+      </div>
+      <div class="question-item">
+        <div class="question"></div>
+        <div class="answer">
+          <p>
+            At <strong>RohilNextGen</strong>, our mission is to ensure students are industry-ready,
+            combining classical programming knowledge with the latest trends in AI,
+            cloud, and low-code development. The future belongs to those who
+            learn smarter, faster, and adapt continuously — and these courses are
+            the perfect starting point.</p>
+            </div>
+      </div>
+  `,
+      },
+      {
+        id: 2,
+        title: "How I Fast-Tracked My AI Skills in 30 Days with Just $500",
+        excerpt: "My personal 30-day roadmap to learning AI from zero — using only $500, clear planning, and focused practice.",
+        image: "./images/AI.jpg",
+        date: "November 25, 2025",
+        category: "Artificial Intelligence",
+        author: "Rohil NextGen",
+        relatedContent: `
+    <div class="interview-questions">
+      <h4>How I Fast-Tracked My AI Skills in 30 Days</h4>
+
+      <div class="question-item">
+        <div class="question">My 30-Day AI Learning Journey</div>
+        <div class="answer">
+          <p>
+            Learning AI felt overwhelming at first — too many tools, too many courses,
+            and too much confusing information. So, I set one simple rule for myself:
+            <strong>30 days, $500 budget, and a clear roadmap</strong>. No distractions.
+          </p>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Week 1 — Understanding the Basics</div>
+        <div class="answer">
+          <p>
+            I learned what AI actually means, how machine learning works, and revised
+            basic Python concepts. This helped me understand the logic behind models
+            instead of blindly copying code.
+          </p>
+          <ul>
+            <li>Core Python programming concepts</li>
+            <li>Basic statistics and probability</li>
+            <li>Introduction to machine learning concepts</li>
+            <li>Setting up development environment</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Week 2 — Hands-On Practice</div>
+        <div class="answer">
+          <p>
+            I invested in beginner-friendly courses and built small projects like
+            a spam detector and a basic image classifier. Building my first working model
+            boosted my confidence instantly.
+          </p>
+          <ul>
+            <li>Pandas and NumPy for data manipulation</li>
+            <li>Scikit-learn for basic ML models</li>
+            <li>First project: Email spam classifier</li>
+            <li>Second project: Basic image recognition</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Week 3 — Real Projects</div>
+        <div class="answer">
+          <p>
+            This week, AI became practical. I built a mini chatbot, a recommendation system,
+            and workflow automation scripts — everything became clearer through real usage.
+          </p>
+          <ul>
+            <li>Simple chatbot using NLP techniques</li>
+            <li>Movie recommendation system</li>
+            <li>Data preprocessing automation</li>
+            <li>Model deployment basics</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Week 4 — Choosing a Specialization</div>
+        <div class="answer">
+          <p>
+            I explored generative AI, automation workflows, and how companies use AI
+            to save time, reduce manual tasks, and improve operations.
+          </p>
+          <ul>
+            <li>Introduction to Generative AI</li>
+            <li>Business process automation</li>
+            <li>Real-world case studies</li>
+            <li>Industry applications</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Budget Breakdown ($500 Total)</div>
+        <div class="answer">
+          <ul>
+            <li><strong>$150</strong> - Online courses and learning materials</li>
+            <li><strong>$100</strong> - Cloud computing resources</li>
+            <li><strong>$50</strong> - Books and reference materials</li>
+            <li><strong>$100</strong> - Project hosting and deployment</li>
+            <li><strong>$100</strong> - Contingency for additional tools</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="question-item">
+        <div class="question">Final Takeaway</div>
+        <div class="answer">
+          <p>
+            By the end of 30 days, the $500 investment gave me a strong understanding
+            of how AI works and how companies — including Rohil Technologies, Virudhunagar —
+            use AI to build smart real-world solutions.
+          </p>
+          <p><strong>You don't need years to learn AI. You just need a plan, the right tools, and one focused month.</strong></p>
+        </div>
+      </div>
+    </div>
+  `,
+      },
+      {
+        id: 3,
+        title: "Career Opportunities for Lua Developers in 2025",
+        excerpt: "Discover why Lua is becoming a high-demand skill in 2025 and how students can use it to build a strong career in technology.",
+        image: "./images/LUA GameDevelopment.png",
+        date: "November 18, 2025",
+        category: "Lua Developer",
+        author: "Rohil NextGen",
+        relatedContent: `
+      <div class="interview-questions">
+        <h4>Key Changes & Trends in 2025 for Lua Developers</h4>
+
+        <div class="question-item">
+          <div class="question">Why Lua Is Gaining Popularity in 2025?</div>
+          <div class="answer">
+            <p>This question focuses on problem-framing: identifying what's truly being solved, understanding business metrics, data constraints, and deployment context.</p>
+          </div>
+        </div>
+
+       <h4>Top Career Opportunities for Lua Developers</h4>
+
+        <div class="question-item">
+          <div class="question">1. Game Scripting Developer</div>
+          <div class="answer">
+            <p>Used in Roblox, CryEngine, and indie game engines for building
+gameplay mechanics and tools.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">2. Automation & AI Scripting Engineer</div>
+          <div class="answer">
+                       <p>Lua scripts help automate workflows, AI models, and internal
+systems in tech companies.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">3. IoT & Embedded Systems Programmer</div>
+          <div class="answer">
+            <p>Smart devices and robotics use Lua for fast, low-memory processing.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">4. Tools & Plugin Developer</div>
+          <div class="answer">
+            <p>Many apps rely on Lua to build custom tools, plugins, and
+performance scripts.</p>
+          </div>
+        </div>
+
+          <div class="question-item">
+          <div class="question">5. Startup Automation Engineer</div>
+          <div class="answer">
+               <p>Startups prefer Lua for rapid development and lightweight
+automation solutions.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">5. Why Students Should Learn Lua Now</div>
+          <div class="answer">
+            <ul>
+              <li><strong></strong>Easy language for beginners</li>
+              <li><strong></strong>Fast to learn and apply</li>
+              <li><strong></strong>Useful for final-year projects</li>
+              <li><strong></strong>High demand in gaming and automation</li>
+              <li><strong>Rare skill </strong>→ faster hiring opportunities</li>
+            </ul>
+            <p>Lua helps students enter tech fields quickly while building confidence
+in coding.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">6. Learn Lua to Unlock New Opportunities</div>
+          <div class="answer">
+            <p>As industries shift toward speed, automation, and embedded technology, Lua developers are becoming more valuable.
+                  Learning Lua in 2025 gives students a strong advantage and opens doors to a growing range of tech careers.</p>
+          </div>
+        </div>       
+    `,
+      },
+      {
+        id: 4,
+        title: "Top 14 GenAI & ML Interview Questions Asked in FAANG 2025",
+        excerpt: "Prepare for your FAANG-interviews with these top 15 Generative AI and Machine Learning questions that are currently being asked in 2025. Master these concepts to ace your next technical interview.",
+        image: "./images/ai1.jpg",
+        date: "November 11, 2025",
+        category: "Artificial Intelligence",
+        author: "Rohil NextGen",
+        relatedContent: `
+      <div class="interview-questions">
+        <h4>Top 14 GenAI & ML Interview Questions for FAANG 2025</h4>
+
+        <div class="question-item">
+          <div class="question">1. How do you define the "real" problem when framing a machine-learning/GenAI task?</div>
+          <div class="answer">
+            <p>This question focuses on problem-framing: identifying what's truly being solved, understanding business metrics, data constraints, and deployment context.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">2. Explain system thinking in the context of AI/ML models and how trade-offs are balanced.</div>
+          <div class="answer">
+            <p>In big-tech interviews you'll be asked to consider the whole pipeline: data collection, feature engineering, model training, inference latency, monitoring, and cost.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">3. What are some popular Generative AI models and how do they differ?</div>
+          <div class="answer">
+            <p>Examples include GPT‑4, Claude, Gemini, DALL·E, Stable Diffusion. You should explain model objective, architecture (autoregressive vs encoder-decoder), modality and use-case distinctions.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">4. What are the main types of generative models?</div>
+          <div class="answer">
+            <ul>
+              <li><strong>Variational Autoencoders (VAEs)</strong></li>
+              <li><strong>Generative Adversarial Networks (GANs)</strong></li>
+              <li><strong>Diffusion Models</strong></li>
+            </ul>
+            <p>You should mention strengths, weaknesses, typical use-cases and why certain architectures emerged.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">5. What is a Transformer model and why has it become ubiquitous?</div>
+          <div class="answer">
+            <p>A Transformer uses self-attention, allows parallel processing of sequence tokens, handles long-range dependencies better than RNNs/CNNs. Understanding its architecture and how it underpins many GenAI models is key.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">6. Explain the concept of RLHF (Reinforcement Learning with Human Feedback).</div>
+          <div class="answer">
+            <p>RLHF combines reinforcement-learning with human reviewer signals to align models (especially LLMs) with human preferences, safety constraints, and utility. You might discuss reward modelling, policy updates, and evaluation challenges.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">7. What is the bias-variance trade-off, and how does it relate to overfitting and underfitting?</div>
+          <div class="answer">
+            <ul>
+              <li><strong>Overfitting:</strong> Model memorises training data → poor generalisation.</li>
+              <li><strong>Underfitting:</strong> Model too simple → cannot learn underlying patterns properly.</li>
+            </ul>
+            <p>Discuss how you detect, diagnose and mitigate both in ML workflows.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">8. How do you evaluate the quality and diversity of generated samples?</div>
+          <div class="answer">
+            <p>Mention metrics like Fréchet Inception Distance (FID), Inception Score (IS) for images, perplexity for text, human evaluation for alignment—plus practical trade-offs.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">9. Explain the concept of latent space in generative models.</div>
+          <div class="answer">
+            <p>Latent space is a continuous representation where similar inputs map to nearby points; sampling or interpolation in latent space enables generation of new examples and controlling attributes. You could give example in VAEs, diffusion models or embedding-based LLMs.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">10. What are decoding strategies such as top-K, top-P (nucleus) sampling, temperature, greedy decoding, and when would you use each?</div>
+          <div class="answer">
+            <p>Important in LLM interviews: you can compare greedy (deterministic) vs sampling (diverse) vs nucleus; relate to trade-offs of coherence vs creativity vs latency.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">11. How do you ensure the safety, robustness and alignment of large language models or generative systems?</div>
+          <div class="answer">
+            <p>Talk about adversarial prompts, hallucinations, bias/fairness, guardrails, human-in-loop, monitoring, continual learning, evaluation under user safety constraints.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">12. What are diffusion models, and how do they compare to GANs and VAEs?</div>
+          <div class="answer">
+            <p>Explain forward-noise process, reverse-denoising, pros (stable training, high res), cons (compute heavy); compare with GAN mode collapse / VAE blurry output.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">13. Describe how you would design an end-to-end GenAI/ML system for a specific product (e.g., personalised content, search ranking, image generation).</div>
+          <div class="answer">
+            <p>Clarify requirements, business metrics, data pipeline, feature store, model training, serving/inference, monitoring, scaling, cost. Show you understand full lifecycle.</p>
+          </div>
+        </div>
+
+        <div class="question-item">
+          <div class="question">14. How do you address bias, fairness and ethical issues in generative AI models?</div>
+          <div class="answer">
+            <p>Cover dataset diversity, measuring bias, fairness objectives, mitigations (data augmentation, adversarial training), transparency, regulatory/compliance constraints.</p>
+          </div>
+        </div>       
+      </div>
+    `,
+      },
+      {
+        id: 5,
+        title: "Python for Data Analysis: Complete Guide",
+        excerpt:
+          "Master Python for data analysis with this complete guide — covering Pandas, NumPy, cleaning datasets, EDA, and data visualization techniques.",
+        image: "./images/python-code.jpg",
+        date: "November 4, 2025",
+        category: "Python",
+        author: "Rohil NextGen",
+        relatedContent: `
+    <div class="interview-questions">
+      <h4>Python Data Analysis Guide</h4>
+
+      <p>
+        This detailed guide helps you understand how Python is used for real-world
+        data analysis. You will learn data cleaning, transformation, exploratory
+        data analysis (EDA), and visualization techniques.
+      </p>
+
+      <h5>Key Topics Covered:</h5>
+      <ul>
+        <li>Introduction to Data Analysis Workflow</li>
+        <li>Working with Pandas: DataFrames, filtering & grouping</li>
+        <li>NumPy for numerical operations</li>
+        <li>Cleaning messy datasets</li>
+        <li>Exploratory Data Analysis (EDA)</li>
+        <li>Matplotlib & Seaborn for data visualization</li>
+        <li>Real-world data analysis examples</li>
+      </ul>
+
+      <h5>Why Learn Python for Data Analysis?</h5>
+      <p>
+        Python is the most widely used language in data science due to its 
+        simplicity, powerful libraries, and strong community support.
+      </p>
+
+      <h5>Mini Practice Questions:</h5>
+      <ul>
+        <li>How do you handle missing values in Pandas?</li>
+        <li>What is the difference between a list and a NumPy array?</li>
+        <li>How do you visualize a correlation heatmap?</li>
+      </ul>
+
+      <p><strong>Stay tuned for code examples and downloadable datasets!</strong></p>
+    </div>
+  `,
+      },
+      {
+        id: 6,
+        title: "React JS Best Practices for 2025",
+        excerpt:
+          "Simple and effective React JS best practices every developer should follow in 2025.",
+        image: "./images/react1.png",
+        date: "October 28, 2025",
+        category: "React Development",
+        author: "Rohil NextGen",
+        relatedContent: `
+    <div class="interview-questions">
+      <h4>React JS Best Practices (Simple Guide)</h4>
+
+      <p>Here are the most important React best practices you should follow in 2025.</p>
+
+      <h5>1. Use Functional Components</h5>
+      <p>Always prefer functional components instead of class components.</p>
+
+      <h5>2. Use Hooks</h5>
+      <p>Hooks like useState and useEffect make your code cleaner and easier to manage.</p>
+
+      <h5>3. Keep Components Small</h5>
+      <p>Each component should handle only one simple task.</p>
+
+      <h5>4. Use a Good Folder Structure</h5>
+      <p>Organize files by feature or modules for easy maintenance.</p>
+
+      <h5>5. Avoid Prop Drilling</h5>
+      <p>Use Context API or small state libraries like Zustand.</p>
+
+      <h5>6. Reuse Logic with Custom Hooks</h5>
+      <p>Move repeated logic into custom hooks to reduce duplicate code.</p>
+
+      <h5>7. Improve Performance</h5>
+      <p>Use React.memo, useCallback, and lazy loading where needed.</p>
+
+      <h5>8. Use TypeScript (Optional but Recommended)</h5>
+      <p>Makes your code safer and easier to scale.</p>
+
+      <h5>Final Note</h5>
+      <p>Following these simple steps will help you build better React apps in 2025.</p>
+    </div>
+  `,
+      },
+
+      {
+        id: 7,
+        title: "DevOps Tools Every Developer Should Know",
+        excerpt:
+          "Explore the essential DevOps tools every modern developer must master to streamline CI/CD pipelines, automate workflows, and deliver high-quality software efficiently.",
+        image: "./images/dev-ops.jpg",
+        date: "October 21, 2025",
+        category: "DevOps",
+        author: "Rohil NextGen",
+        relatedContent: `
+    <div class="interview-questions">
+      <h4>Essential DevOps Tools Every Developer Should Know</h4>
+
+      <p>
+        DevOps has become a crucial part of modern software engineering.  
+        Whether you're building microservices, automating deployments, or improving collaboration,  
+        the right DevOps tools can significantly boost productivity and reliability.
+      </p>
+
+      <h5>Core Categories of DevOps Tools</h5>
+      <ul>
+        <li><strong>Version Control Systems</strong> – Git, GitHub, GitLab</li>
+        <li><strong>CI/CD Pipelines</strong> – Jenkins, GitHub Actions, GitLab CI</li>
+        <li><strong>Containerization</strong> – Docker</li>
+        <li><strong>Orchestration</strong> – Kubernetes</li>
+        <li><strong>Infrastructure as Code</strong> – Terraform, Ansible</li>
+        <li><strong>Monitoring & Logging</strong> – Prometheus, Grafana, ELK Stack</li>
+        <li><strong>Cloud Platforms</strong> – AWS, Azure, Google Cloud</li>
+      </ul>
+
+      <h5>Why These Tools Are Important</h5>
+      <p>
+        DevOps tools help automate repetitive tasks, reduce deployment errors, improve system visibility,  
+        and enable continuous delivery. This results in faster development cycles and more reliable applications.
+      </p>
+
+      <h4>Popular DevOps Tools Explained</h4>
+
+      <h5>1. Git & GitHub</h5>
+      <p>
+        The backbone of modern development. Enables source code management, collaboration, and version tracking.
+      </p>
+
+      <h5>2. Jenkins</h5>
+      <p>
+        A powerful automation server used to build CI/CD pipelines. Developers rely on it to automate builds, tests, and deployments.
+      </p>
+
+      <h5>3. Docker</h5>
+      <p>
+        Makes application packaging easy by creating lightweight, portable containers that run anywhere.
+      </p>
+
+      <h5>4. Kubernetes</h5>
+      <p>
+        A container orchestration platform used to scale, manage, and automate deployments of containerized applications.
+      </p>
+
+      <h5>5. Terraform</h5>
+      <p>
+        An Infrastructure as Code (IaC) tool for managing cloud infrastructure using configuration files.
+      </p>
+
+      <h5>6. Prometheus & Grafana</h5>
+      <p>
+        Used for real-time monitoring and visual dashboards to track app performance and infrastructure health.
+      </p>
+
+      <h5>Practice Questions</h5>
+      <ul>
+        <li>What is the difference between CI and CD?</li>
+        <li>How does Docker differ from Virtual Machines?</li>
+        <li>Explain the role of Kubernetes in microservices.</li>
+        <li>What is Infrastructure as Code (IaC)?</li>
+      </ul>
+
+      <p><strong>Stay tuned for real-world DevOps workflow examples and tool comparison charts!</strong></p>
+    </div>
+  `,
+      },
+      {
+        id: 8,
+        title: "Flutter 2025: Future-Ready Q&A for Next-Gen App Development",
+        excerpt: "Explore Flutter's evolution into a universal platform with AI capabilities, federated architecture, and reactive UI patterns.",
+        image: "./images/flutter.png",
+        date: "October 14, 2025",
+        category: "Mobile Development",
+        author: "Rohil NextGen",
+        relatedContent: `
+    <div class="interview-questions">
+      <h4>Top Flutter Q&A to Master in 2025 (Attractive Edition)</h4>
+      <div class="question-item">
+        <div class="question"> What makes Flutter still powerful in 2025?</div>
+        <div class="answer">
+          <p>
+            Flutter has evolved into a universal canvas.
+            Apps stretch effortlessly across mobile, web, desktop, wearables — even cars.
+            With high-performance rendering and flexible UI layers, it remains a developer's shortcut to delightful experiences.
+          </p>
+        </div>
+      </div>
+      <div class="question-item">
+        <div class="question"> Why is Flutter favored for AI-based apps now?</div>
+        <div class="answer">
+          <p>
+            The new 2025 Flutter ecosystem has built-in support for:
+          </p>
+          <ul>
+            <li><strong>On-device ML models</strong> – Run AI locally without cloud dependency</li>
+            <li><strong>Fast embeddings</strong> – Quick integration of AI features</li>
+            <li><strong>Dynamic UI generation</strong> – Interfaces that adapt intelligently</li>
+            <li><strong>Edge-friendly inference</strong> – Optimized for edge computing</li>
+          </ul>
+          <p>Flutter speaks AI fluently, turning app screens into responsive, learning companions.</p>
+        </div>
+      </div>
+      <div class="question-item">
+        <div class="question"> What's the role of "Flutter Federated Architecture"?</div>
+        <div class="answer">
+          <p>
+            It splits features into clean, modular plugins.
+            Instead of one giant block of code, each feature lives in its own mini-island — easy to update, test, and scale.
+            Developers love it because maintenance becomes a breeze.
+          </p>    
+        </div>
+      </div>
+      <div class="question-item">
+        <div class="question"> Why is Flutter so good for animations today?</div>
+        <div class="answer">
+          <p>
+            Flutter treats animation like poetry — fluid, expressive, and performant.
+            The 2025 engine enhances:
+          </p>
+          <ul>
+            <li><strong>Frame prediction</strong> – Smoother animations with predictive rendering</li>
+            <li><strong>GPU-aware rendering</strong> – Optimized for device capabilities</li>
+            <li><strong>Ultra-smooth motion APIs</strong> – Advanced animation controls</li>
+          </ul>
+          <p>You can shape micro-interactions that feel almost alive.</p>
+        </div>
+      </div>
+      <div class="question-item">
+        <div class="question"> What is the new "Flutter Reactive UI Patterns" trend?</div>
+        <div class="answer">
+          <p>
+            It's a modern approach where widgets respond instantly to:
+          </p>
+          <ul>
+            <li><strong>App state</strong> – Real-time UI updates</li>
+            <li><strong>Data streams</strong> – Continuous data flow handling</li>
+            <li><strong>User context</strong> – Personalized interface adjustments</li>
+          </ul>
+          <p>Screens rebuild gracefully, creating apps that feel natural and intuitive.</p>
+        </div>
+      </div>
+      <div class="question-item">
+        <div class="question"> Why do companies love Flutter for enterprise in 2026?</div>
+        <div class="answer">
+          <p>
+            <strong>One codebase</strong> – Develop once, deploy everywhere<br>
+            <strong>One design language</strong> – Consistent brand experience across platforms<br>
+            <strong>One deployment pipeline</strong> – Streamlined release process
+          </p>
+          <p>
+            Teams ship products faster, with fewer bugs, and with rich, branded experiences.
+          </p>
+        </div>
+      </div>
+      <div class="question-item">
+        <div class="question">Future-Ready Flutter Learning Path</div>
+        <div class="answer">
+          <p>
+            At <strong>RohilNextGen</strong>, we prepare students for Flutter 2026 with cutting-edge courses:
+          </p>
+          <ul>
+            <li><strong>Flutter Universal Development</strong> – Master multi-platform deployment</li>
+            <li><strong>AI-Integrated Flutter Apps</strong> – Build intelligent applications</li>
+            <li><strong>Advanced Animation & UI</strong> – Create stunning user experiences</li>
+            <li><strong>Enterprise Flutter Architecture</strong> – Design scalable business solutions</li>
+          </ul>
+          <p>
+            These programs equip students with skills that combine Flutter's core strengths with emerging 2026 trends,
+            ensuring they're ready to build the next generation of cross-platform applications.
+          </p>
+        </div>
+      </div>
+    </div>
+  `,
+      },
+    ];
+
+    // Pagination Configuration
+    const postsPerPage = 3;
+    let currentPage = 1;
+
+    // DOM Elements
+    const blogPostsContainer = document.getElementById("blogPostsContainer");
+    const paginationContainer = document.getElementById("paginationContainer");
+    const whatsappForm = document.getElementById("whatsappForm");
+    const nameInput = document.getElementById("nameInput");
+    const phoneInput = document.getElementById("phoneInput");
+    const interestSelect = document.getElementById("interestSelect");
+    const whatsappSubscribeBtn = document.getElementById("whatsappSubscribeBtn");
+    const confirmationModal = document.getElementById("confirmationModal");
+    const closeModal = document.getElementById("closeModal");
+
+    // Initialize the blog
+    document.addEventListener("DOMContentLoaded", function () {
+      displayBlogPosts();
+      setupPagination();
+      setupWhatsAppNewsletter();
+      setupNavigation();
+      initNewsletter();
+      setupChatWidget();
+    });
+
+    // Display blog posts for current page
+    function displayBlogPosts() {
+      const startIndex = (currentPage - 1) * postsPerPage;
+      const endIndex = startIndex + postsPerPage;
+      const postsToShow = blogPosts.slice(startIndex, endIndex);
+
+      blogPostsContainer.innerHTML = "";
+
+      if (postsToShow.length === 0) {
+        blogPostsContainer.innerHTML = `
+          <div class="no-posts">
+            <h3>No articles found</h3>
+            <p>Check back later for new content!</p>
+          </div>
+        `;
+        return;
+      }
+
+      postsToShow.forEach((post) => {
+        const postElement = document.createElement("article");
+        postElement.className = "blog-post";
+        postElement.innerHTML = `
+          <div class="blog-image">
+            <img src="${post.image}" alt="${post.title}" loading="lazy">
+          </div>
+          <div class="blog-content">
+            <div class="blog-meta">
+              <span><i class="far fa-calendar"></i> ${post.date}</span>
+              <span><i class="far fa-user"></i> ${post.author}</span>
+              <span><i class="far fa-folder"></i> ${post.category}</span>
+            </div>
+            <h3>${post.title}</h3>
+            <p>${post.excerpt}</p>
+           
+            
+            <!-- NEW: Thoughts Box for Each Blog Post -->
+            <div class="post-thoughts-box" id="thoughts-${post.id}">
+              <h4 class="post-thoughts-title">
+                <i class="fas fa-comment-dots"></i> Share your thoughts with us
+              </h4>
+              <textarea class="post-thoughts-textarea" 
+                id="thoughts-textarea-${post.id}" 
+                placeholder="Type your message here... (e.g., I loved your article on ${post.category}! Could you cover more about this topic?)">
+              </textarea>
+           <div class="blog-actions">
+              <button class="read-more" data-post-id="${post.id}">Read More <i class="fas fa-arrow-right"></i></button>
+              <button class="whatsapp-contact-btn" onclick="contactViaWhatsApp('${post.title.replace(/'/g, "\\'")}')">
+                <i class="fab fa-whatsapp"></i> Contact via WhatsApp
+              </button>
+            </div>
+            </div>
+            
+            <div class="related-content" id="related-${post.id}">
+              ${post.relatedContent}
+            </div>
+          </div>
+        `;
+        blogPostsContainer.appendChild(postElement);
+      });
+
+      // Add event listeners to read more buttons
+      document.querySelectorAll(".read-more").forEach((button) => {
+        button.addEventListener("click", function () {
+          const postId = this.getAttribute("data-post-id");
+          const relatedContent = document.getElementById(`related-${postId}`);
+
+          // Toggle active class to show/hide related content
+          relatedContent.classList.toggle("active");
+
+          // Update button text
+          if (relatedContent.classList.contains("active")) {
+            this.innerHTML = 'Show Less <i class="fas fa-arrow-up"></i>';
+          } else {
+            this.innerHTML = 'Read More <i class="fas fa-arrow-right"></i>';
+          }
+        });
+      });
+    }
+
+    // Setup pagination controls
+    function setupPagination() {
+      const totalPages = Math.ceil(blogPosts.length / postsPerPage);
+
+      // Clear existing pagination
+      paginationContainer.innerHTML = '';
+
+      // Previous button
+      const prevButton = document.createElement('button');
+      prevButton.innerHTML = '<i class="fas fa-chevron-left"></i> Previous';
+      prevButton.disabled = currentPage === 1;
+      prevButton.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          displayBlogPosts();
+          setupPagination();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+      paginationContainer.appendChild(prevButton);
+
+      // Page number buttons
+      for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        pageButton.classList.toggle('active', i === currentPage);
+        pageButton.addEventListener('click', () => {
+          currentPage = i;
+          displayBlogPosts();
+          setupPagination();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        paginationContainer.appendChild(pageButton);
+      }
+
+      // Next button
+      const nextButton = document.createElement('button');
+      nextButton.innerHTML = 'Next <i class="fas fa-chevron-right"></i>';
+      nextButton.disabled = currentPage === totalPages;
+      nextButton.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          displayBlogPosts();
+          setupPagination();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+      paginationContainer.appendChild(nextButton);
+
+      // Page info
+      const pageInfo = document.createElement('div');
+      pageInfo.className = 'pagination-info';
+      pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+      paginationContainer.appendChild(pageInfo);
+    }
+
+    // NEW: WhatsApp Contact Function
+    window.contactViaWhatsApp = function (articleTitle) {
+      const phoneNumber = "919751867879"; // WhatsApp number
+      const message = encodeURIComponent(
+        `Hello Rohil NextGen Team!\n\nI read your article: "${articleTitle}"\n\nI'm interested in learning more about this topic. Could you please provide more information?\n\nThank you!`
+      );
+
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+      window.open(whatsappUrl, "_blank");
+    };
+
+    // NEW: Send Post Thoughts Function
+    window.sendPostThoughts = function (postId, postTitle) {
+      const textarea = document.getElementById(`thoughts-textarea-${postId}`);
+      const message = textarea.value.trim();
+
+      if (!message) {
+        alert("Please type your thoughts before sending!");
+        textarea.focus();
+        return;
+      }
+
+      if (message.length < 10) {
+        alert("Please provide more details in your message (at least 10 characters)");
+        textarea.focus();
+        return;
+      }
+
+      const phoneNumber = "919751867879";
+      const formattedMessage = encodeURIComponent(
+        `💬 Thoughts on Article: ${postTitle}\n\n` +
+        `My Message: ${message}\n\n` +
+        `Sent via Rohil NextGen Tech Blog`
+      );
+
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${formattedMessage}`;
+      window.open(whatsappUrl, "_blank");
+
+      // Reset textarea after sending
+      textarea.value = "";
+
+      // Show success message
+      const thoughtsBox = document.getElementById(`thoughts-${postId}`);
+      const originalHTML = thoughtsBox.innerHTML;
+
+      thoughtsBox.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+          <i class="fas fa-check-circle" style="color: #25d366; font-size: 2rem; margin-bottom: 10px;"></i>
+          <h4 style="color: var(--dark-gray); margin-bottom: 10px;">Thank you for sharing your thoughts!</h4>
+          <p style="color: var(--medium-gray);">We've opened WhatsApp for you. Please send the message to complete.</p>
+          <button onclick="location.reload()" style="background-color: var(--primary-red); color: white; border: none; padding: 8px 15px; border-radius: 5px; margin-top: 10px; cursor: pointer;">
+            Share More Thoughts
+          </button>
+        </div>
+      `;
+    };
+
+    // Setup WhatsApp newsletter functionality
+    function setupWhatsAppNewsletter() {
+      whatsappForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        handleWhatsAppSubscription();
+      });
+
+      closeModal.addEventListener("click", function () {
+        confirmationModal.style.display = "none";
+        resetForm();
+      });
+    }
+
+    // Handle WhatsApp subscription
+    function handleWhatsAppSubscription() {
+      const name = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+      const interest = interestSelect.value;
+
+      if (!name || !phone || !interest) {
+        alert("Please fill in all fields");
+        return;
+      }
+
+      if (!isValidPhone(phone)) {
+        alert("Please enter a valid phone number");
+        return;
+      }
+
+      // Show loading state
+      whatsappSubscribeBtn.disabled = true;
+      whatsappSubscribeBtn.innerHTML =
+        '<div class="loading"></div> Subscribing...';
+
+      // Simulate API call
+      setTimeout(() => {
+        subscribeViaWhatsApp(name, phone, interest);
+      }, 2000);
+    }
+
+    // Subscribe via WhatsApp
+    function subscribeViaWhatsApp(name, phone, interest) {
+      // Format phone number (remove any non-digit characters)
+      const formattedPhone = phone.replace(/\D/g, "");
+
+      // Create WhatsApp message
+      const message = encodeURIComponent(
+        `Hello ${name}! Thank you for subscribing to Rohil NextGen WhatsApp updates. ` +
+        `You'll receive updates about ${getInterestDisplayName(
+          interest
+        )}. ` +
+        `Stay tuned for the latest tech insights and tutorials!`
+      );
+
+      // Create WhatsApp URL
+      const whatsappUrl = `https://wa.me/919751867879?text=${message}`;
+
+      // Open WhatsApp in new tab
+      window.open(whatsappUrl, "_blank");
+
+      // Show confirmation modal
+      confirmationModal.style.display = "flex";
+
+      // Reset form
+      resetForm();
+    }
+
+    // Get display name for interest
+    function getInterestDisplayName(interest) {
+      const interests = {
+        "web-development": "Web Development",
+        "data-science": "Data Science",
+        "ai-ml": "AI & Machine Learning",
+        cybersecurity: "Cybersecurity",
+        "mobile-dev": "Mobile Development",
+        "cloud-computing": "Cloud Computing",
+        all: "all technology topics",
+      };
+      return interests[interest] || interest;
+    }
+
+    // Reset form
+    function resetForm() {
+      whatsappForm.reset();
+      whatsappSubscribeBtn.disabled = false;
+      whatsappSubscribeBtn.innerHTML =
+        '<i class="fab fa-whatsapp"></i><span>Subscribe via WhatsApp</span>';
+    }
+
+    // Phone validation (basic Indian format)
+    function isValidPhone(phone) {
+      const phoneRegex = /^[6-9]\d{9}$/;
+      return phoneRegex.test(phone.replace(/\D/g, ""));
+    }
+
+    // Setup navigation functionality
+    function setupNavigation() {
+      // Mobile Menu Toggle
+      const hamburger = document.querySelector(".hamburger");
+      const navMenu = document.querySelector(".nav-menu");
+      const mobileOverlay = document.createElement("div");
+      mobileOverlay.className = "mobile-overlay";
+      document.body.appendChild(mobileOverlay);
+
+      hamburger.addEventListener("click", () => {
+        navMenu.classList.toggle("active");
+        mobileOverlay.classList.toggle("active");
+        document.body.style.overflow = navMenu.classList.contains("active")
+          ? "hidden"
+          : "";
+      });
+
+      mobileOverlay.addEventListener("click", () => {
+        navMenu.classList.remove("active");
+        mobileOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+      });
+
+      // Close mobile menu when clicking on a link
+      document.querySelectorAll(".nav-link").forEach((n) =>
+        n.addEventListener("click", (e) => {
+          // Only close menu if it's not a dropdown trigger
+          if (!e.target.closest(".nav-item").querySelector(".dropdown")) {
+            navMenu.classList.remove("active");
+            mobileOverlay.classList.remove("active");
+            document.body.style.overflow = "";
+          }
+        })
+      );
+
+      // Mobile Dropdown Functionality
+      document.querySelectorAll(".nav-item").forEach((item) => {
+        const dropdown = item.querySelector(".dropdown");
+        const navLink = item.querySelector(".nav-link");
+
+        if (dropdown) {
+          // Add click event for mobile dropdowns
+          navLink.addEventListener("click", (e) => {
+            if (window.innerWidth <= 768) {
+              e.preventDefault();
+
+              // Close other open dropdowns
+              document
+                .querySelectorAll(".dropdown.active")
+                .forEach((otherDropdown) => {
+                  if (otherDropdown !== dropdown) {
+                    otherDropdown.classList.remove("active");
+                    otherDropdown.previousElementSibling.classList.remove(
+                      "active"
+                    );
+                  }
+                });
+
+              // Toggle current dropdown
+              dropdown.classList.toggle("active");
+              navLink.classList.toggle("active");
+            }
+          });
+        }
+      });
+
+      // Close dropdowns when clicking outside
+      document.addEventListener("click", (e) => {
+        if (window.innerWidth <= 768) {
+          if (
+            !e.target.closest(".nav-item") &&
+            !e.target.closest(".hamburger")
+          ) {
+            document
+              .querySelectorAll(".dropdown.active")
+              .forEach((dropdown) => {
+                dropdown.classList.remove("active");
+                dropdown.previousElementSibling.classList.remove("active");
+              });
+          }
+        }
+      });
+
+      // Back to Top Button
+      const backToTopButton = document.getElementById("backToTop");
+
+      window.addEventListener("scroll", () => {
+        if (window.pageYOffset > 300) {
+          backToTopButton.classList.add("active");
+        } else {
+          backToTopButton.classList.remove("active");
+        }
+      });
+
+      backToTopButton.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      // Close mobile menu on resize if window becomes larger
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 768) {
+          navMenu.classList.remove("active");
+          mobileOverlay.classList.remove("active");
+          document.body.style.overflow = "";
+          document
+            .querySelectorAll(".dropdown.active")
+            .forEach((dropdown) => {
+              dropdown.classList.remove("active");
+              dropdown.previousElementSibling.classList.remove("active");
+            });
+        }
+      });
+    }
+
+    // Newsletter Functionality
+    function initNewsletter() {
+      const newsletterForm = document.getElementById("newsletterForm");
+      const newsletterEmail = document.getElementById("newsletterEmail");
+      const newsletterBtn = document.getElementById("newsletterBtn");
+      const btnText = document.getElementById("btnText");
+      const messageDiv = document.getElementById("newsletterMessage");
+
+      newsletterForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const email = newsletterEmail.value.trim();
+
+        // Validate email
+        if (!validateEmail(email)) {
+          showMessage("Please enter a valid email address.", "error");
+          return;
+        }
+
+        // Show loading state
+        setButtonState("loading");
+
+        // Send email using EmailJS
+        emailjs
+          .send("service_45iohnc", "template_hjk6fxj", {
+            to_email: "rohiltechtrainee@gmail.com",
+            user_email: email,
+            subject: "New Newsletter Subscription - Rohil NextGen",
+            message: `New newsletter subscription from Rohil NextGen website:\n\nEmail: ${email}\nDate: ${new Date().toLocaleString()}`,
+            reply_to: email,
+          })
+          .then(function (response) {
+            console.log("SUCCESS!", response.status, response.text);
+            showMessage(
+              "Thank you for subscribing! You will receive updates from Rohil NextGen.",
+              "success"
+            );
+            newsletterForm.reset();
+            setButtonState("success");
+
+            // Reset button after 2 seconds
+            setTimeout(() => {
+              setButtonState("default");
+            }, 2000);
+          })
+          .catch(function (error) {
+            console.error("FAILED...", error);
+            showMessage(
+              "Sorry, there was an error. Please try again later or contact us directly.",
+              "error"
+            );
+            setButtonState("error");
+
+            // Reset button after 3 seconds
+            setTimeout(() => {
+              setButtonState("default");
+            }, 3000);
+          });
+      });
+
+      // Email validation function
+      function validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+
+      // Show message function
+      function showMessage(message, type) {
+        messageDiv.textContent = message;
+        messageDiv.className = `newsletter-message newsletter-${type}`;
+        messageDiv.style.display = "block";
+
+        // Auto-hide success messages after 5 seconds
+        if (type === "success") {
+          setTimeout(() => {
+            messageDiv.style.display = "none";
+          }, 5000);
+        }
+      }
+
+      // Set button state
+      function setButtonState(state) {
+        switch (state) {
+          case "loading":
+            btnText.textContent = "Subscribing...";
+            newsletterBtn.disabled = true;
+            break;
+          case "success":
+            btnText.textContent = "Subscribed!";
+            newsletterBtn.disabled = true;
+            break;
+          case "error":
+            btnText.textContent = "Failed!";
+            newsletterBtn.disabled = true;
+            break;
+          default:
+            btnText.textContent = "Subscribe";
+            newsletterBtn.disabled = false;
+        }
+      }
+
+      // Hide message when user starts typing again
+      newsletterEmail.addEventListener("input", function () {
+        if (messageDiv.style.display === "block") {
+          messageDiv.style.display = "none";
+        }
+      });
+    }
+
+    // Chat Widget Functionality - UPDATED
+    function setupChatWidget() {
+      const chatToggle = document.getElementById("chatToggle");
+      const chatContainer = document.getElementById("chatContainer");
+      const chatClose = document.getElementById("chatClose");
+      const chatMessages = document.getElementById("chatMessages");
+      const chatInput = document.getElementById("chatInput");
+      const sendButton = document.getElementById("sendButton");
+      const typingIndicator = document.getElementById("typingIndicator");
+      const courseList = document.getElementById("courseList");
+
+      // Toggle chat visibility
+      chatToggle.addEventListener("click", function () {
+        const isVisible = chatContainer.style.display === "flex";
+        chatContainer.style.display = isVisible ? "none" : "flex";
+
+        // Focus on input when opening chat
+        if (!isVisible) {
+          setTimeout(() => {
+            chatInput.focus();
+          }, 300);
+        }
+      });
+
+      // Close chat
+      chatClose.addEventListener("click", function () {
+        chatContainer.style.display = "none";
+      });
+
+      // Course item click handlers
+      document.querySelectorAll(".course-item").forEach((item) => {
+        item.addEventListener("click", function (e) {
+          // Prevent triggering when clicking buttons inside course details
+          if (e.target.classList.contains('quick-action-btn')) return;
+
+          const course = this.getAttribute("data-course");
+          const details = document.getElementById(`${course}-details`);
+
+          // Toggle course details
+          document.querySelectorAll(".course-details").forEach((d) => {
+            if (d !== details) d.classList.remove("active");
+          });
+
+          details.classList.toggle("active");
+          scrollToBottom();
+        });
+      });
+
+      // Send message function
+      function sendMessage() {
+        const message = chatInput.value.trim();
+        if (message === "") return;
+
+        // Add user message
+        addMessage(message, "user");
+        chatInput.value = "";
+
+        // Show typing indicator
+        typingIndicator.style.display = "block";
+        scrollToBottom();
+
+        // Simulate bot response after a delay
+        setTimeout(function () {
+          typingIndicator.style.display = "none";
+          let botResponse = getBotResponse(message);
+
+          if (
+            message.toLowerCase().includes("courses") ||
+            message.toLowerCase().includes("all courses")
+          ) {
+            courseList.style.display = "flex";
+            addMessage(botResponse, "bot");
+          } else {
+            courseList.style.display = "none";
+            addMessage(botResponse, "bot");
+          }
+        }, 1500);
+      }
+
+      // Add message to chat
+      function addMessage(text, sender) {
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `chat-message ${sender}`;
+
+        const messageContent = document.createElement("div");
+        messageContent.className = "message-content";
+        messageContent.textContent = text;
+
+        messageDiv.appendChild(messageContent);
+        chatMessages.appendChild(messageDiv);
+
+        scrollToBottom();
+      }
+
+      // Scroll to bottom of chat
+      function scrollToBottom() {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      // Get bot response based on user input
+      function getBotResponse(message) {
+        const lowerMessage = message.toLowerCase();
+
+        // Add greeting recognition first - REORDERED for proper matching
+        if (lowerMessage.includes("good morning")) {
+          return "Good morning! ☀️ Welcome to Rohil Groups. How can I help you today? You can ask about our courses, placements, or contact information.";
+        } else if (lowerMessage.includes("good afternoon")) {
+          return "Good afternoon! 🌞 Welcome to Rohil Groups. How can I assist you today? You can ask about our courses, placements, or contact information.";
+        } else if (lowerMessage.includes("good evening")) {
+          return "Good evening! 🌙 Welcome to Rohil Groups. How can I help you today? You can ask about our courses, placements, or contact information.";
+        } else if (
+          lowerMessage.includes("b.tech") ||
+          lowerMessage.includes("b.sc") ||
+          lowerMessage.includes("graduate") ||
+          lowerMessage.includes("passed out") ||
+          lowerMessage.includes("passed-out") ||
+          lowerMessage.includes("student") ||
+          lowerMessage.includes("Hi, I am a 2023 passed-out MCA student. Can I get a job in the IT field?") ||
+          lowerMessage.includes("job in it")
+        ) {
+          // Extract year from message if present
+          const yearMatch = lowerMessage.match(/\b(19|20)\d{2}\b/);
+          const year = yearMatch ? yearMatch[0] : '';
+
+          if (year) {
+            return `Of course! 🎯 Even though you graduated in ${year}, you can definitely get a job in the IT field. What matters most is your skills, projects, and practical knowledge.`;
+          } else {
+            return "Of course! 🎯 You can definitely get a job in the IT field. What matters most is your skills, projects, and practical knowledge.";
+          }
+        } else if (
+          lowerMessage.includes("hi") ||
+          lowerMessage.includes("hello") ||
+          lowerMessage.includes("hey")
+        ) {
+          return "Hi there! 👋 Welcome to Rohil Groups. How can I help you today? You can ask about: Courses, Placements, Contact";
+        } else if (
+          lowerMessage.includes("thank you") ||
+          lowerMessage.includes("thanks") ||
+          lowerMessage.includes("thankyou")
+        ) {
+          return "You're welcome! 😊 Glad I could help. Spread the joy of learning.";
+        } else if (
+          lowerMessage.includes("courses") ||
+          lowerMessage.includes("all courses") ||
+          lowerMessage.includes("services")
+        ) {
+          return "Here are all our trending courses: Java Full Stack, Python Data Science, Web Development, Mobile App Development, Cloud Computing, Artificial Intelligence, Machine Learning, Cybersecurity, DevOps, and UI/UX Design. Click on any course above to see details.";
+        } else if (lowerMessage.includes("java")) {
+          return "💻 Java Full Stack Development covers Core Java, Advanced Java, Spring Framework, Hibernate, and Frontend technologies like HTML, CSS, and React. Click on the Java course above for details.";
+        } else if (lowerMessage.includes("python")) {
+          return "🐍 Python with Data Science includes Python basics, data analysis with Pandas, visualization, machine learning, and web frameworks like Flask and Django. Click on the Python course above for details.";
+        } else if (
+          lowerMessage.includes("web development") ||
+          lowerMessage.includes("web")
+        ) {
+          return "🌐 Web Development covers frontend (HTML, CSS, JavaScript, React) and backend (Node.js, Express, and databases). Click on the Web Development course above for details.";
+        } else if (
+          lowerMessage.includes("mobile") ||
+          lowerMessage.includes("app")
+        ) {
+          return "📱 Mobile App Development covers Android, iOS, and cross-platform app development with Flutter and React Native. Click on the Mobile App Development course above for details.";
+        } else if (
+          lowerMessage.includes("data science") ||
+          lowerMessage.includes("analytics")
+        ) {
+          return "📊 Data Science & Analytics covers Python, statistics, Pandas, visualization tools (Matplotlib, Power BI), and machine learning. Click on the Data Science course above for details.";
+        } else if (lowerMessage.includes("cloud")) {
+          return "☁️ Cloud Computing includes AWS, Azure, Google Cloud, and DevOps integration for scalable deployment. Click on the Cloud Computing course above for details.";
+        } else if (
+          lowerMessage.includes("ai") ||
+          lowerMessage.includes("artificial intelligence")
+        ) {
+          return "🤖 Artificial Intelligence covers neural networks, deep learning, NLP (Natural Language Processing), and Generative AI tools like ChatGPT. Click on the AI course above for details.";
+        } else if (
+          lowerMessage.includes("ml") ||
+          lowerMessage.includes("machine learning")
+        ) {
+          return "🧠 Machine Learning course includes supervised and unsupervised learning, regression, classification, and model deployment techniques. Click on the ML course above for more info.";
+        } else if (
+          lowerMessage.includes("cyber security") ||
+          lowerMessage.includes("cybersecurity") ||
+          lowerMessage.includes("hacking")
+        ) {
+          return "🔐 Cybersecurity covers ethical hacking, network security, penetration testing, and protecting against real-world cyber threats. Click on the Cybersecurity course above for details.";
+        } else if (lowerMessage.includes("devops")) {
+          return "⚙️ DevOps training includes CI/CD, Docker, Kubernetes, Jenkins, and version control with Git & GitHub. Click on the DevOps course above for details.";
+        } else if (
+          lowerMessage.includes("ui") ||
+          lowerMessage.includes("ux") ||
+          lowerMessage.includes("design")
+        ) {
+          return "🎨 UI/UX Design covers design principles, Figma, Adobe XD, wireframing, and prototyping for modern digital interfaces. Click on the UI/UX course above for details.";
+        } else if (
+          lowerMessage.includes("placement") ||
+          lowerMessage.includes("job")
+        ) {
+          return "🎯 We provide 100% placement assistance with mock interviews, resume building, and connections to our hiring partners. Would you like to know more about our placement training?";
+        } else if (
+          lowerMessage.includes("support") ||
+          lowerMessage.includes("help")
+        ) {
+          return "💬 Our support team is currently away. Please leave your message and we'll get back to you as soon as possible.";
+        } else if (
+          lowerMessage.includes("contact") ||
+          lowerMessage.includes("email") ||
+          lowerMessage.includes("phone")
+        ) {
+          return "📞 You can reach us at admin@rohiltechnologies.com or call +91 97518 67879. Our office is located in Virudhunagar.";
+        } else if (
+          lowerMessage.includes("which course?") ||
+          lowerMessage.includes("suitable course") ||
+          lowerMessage.includes("what should i learn?") ||
+          lowerMessage.includes("recommend course")
+        ) {
+          return `To recommend the most suitable course, please share your educational background and area of interest. MCA / B.Tech / B.Sc IT → Full Stack Development, Data Analytics, or Cloud Computing. MBA / BBA → Digital Marketing or Business Analytics. Non-technical background → Web Design or Basic Computer Application`;
+        }
+        else if (
+          lowerMessage.includes("bye") ||
+          lowerMessage.includes("goodbye") ||
+          lowerMessage.includes("see you")
+        ) {
+          return "👋 Goodbye! Have a great day! If you need any help, feel free to message again.";
+        }
+        else {
+          return "🤔 I didn't quite get that. Try typing 'courses' to see all our trending programs — including AI, Data Science, Full Stack, and more!";
+        }
+      }
+
+      // Course enrollment function
+      window.enrollCourse = function (courseName) {
+        addMessage(`I'm interested in enrolling in ${courseName}`, "user");
+
+        typingIndicator.style.display = "block";
+        scrollToBottom();
+
+        setTimeout(function () {
+          typingIndicator.style.display = "none";
+          addMessage(
+            `Great! I've noted your interest in ${courseName}. Our admission team will contact you shortly with enrollment details.`,
+            "bot"
+          );
+        }, 1500);
+      };
+
+      // Syllabus request function
+      window.requestSyllabus = function (courseName) {
+        addMessage(`Can I get the syllabus for ${courseName}?`, "user");
+
+        typingIndicator.style.display = "block";
+        scrollToBottom();
+
+        setTimeout(function () {
+          typingIndicator.style.display = "none";
+          addMessage(
+            `I've sent the ${courseName} syllabus to your email. Please check your inbox. If you don't receive it, contact us at admin@rohiltechnologies.com`,
+            "bot"
+          );
+        }, 1500);
+      };
+
+      // Send message on button click
+      sendButton.addEventListener("click", sendMessage);
+
+      // Send message on Enter key
+      chatInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          sendMessage();
+        }
+      });
+
+      // Auto-open chat after 10 seconds
+      setTimeout(function () {
+        if (chatContainer.style.display !== "flex") {
+          chatContainer.style.display = "flex";
+          chatInput.focus();
+        }
+      }, 10000);
+    }
+  </script>
+</body>
+
+</html>
